@@ -1,7 +1,7 @@
 package io.ipinfo.model;
 
 
-public class IPResponse {
+public class IpResponse {
     private final String ip;
     private final String hostname;
     private final String city;
@@ -15,7 +15,7 @@ public class IPResponse {
     private final Company company;
     private final Carrier carrier;
 
-    public IPResponse(String ip, String hostname, String city, String region, String country, String loc, String postal, String org, String phone, Asn asn, Company company, Carrier carrier) {
+    public IpResponse(String ip, String hostname, String city, String region, String country, String loc, String postal, String org, String phone, Asn asn, Company company, Carrier carrier) {
         this.ip = ip;
         this.hostname = hostname;
         this.city = city;
@@ -32,7 +32,7 @@ public class IPResponse {
 
     @Override
     public String toString() {
-        return "IPResponse{" +
+        return "IpResponse{" +
                 "ip='" + ip + '\'' +
                 ", hostname='" + hostname + '\'' +
                 ", city='" + city + '\'' +

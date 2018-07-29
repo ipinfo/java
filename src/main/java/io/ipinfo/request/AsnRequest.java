@@ -2,7 +2,7 @@ package io.ipinfo.request;
 
 import io.ipinfo.errors.ErrorResponseError;
 import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.model.AsnResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -10,18 +10,18 @@ import okhttp3.Response;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class IPRequest extends BaseRequest<IPResponse> {
+public class AsnRequest extends BaseRequest<AsnResponse> {
     private final static String URL_FORMAT = "https://ipinfo.io/%s/json";
-    private final String ip;
+    private final String asn;
 
-    public IPRequest(OkHttpClient client, ExecutorService executorService, String token, String ip) {
+    public AsnRequest(OkHttpClient client, ExecutorService executorService, String token, String asn) {
         super(client, executorService, token);
-        this.ip = ip;
+        this.asn = asn;
     }
 
     @Override
-    public Future<IPResponse> handle() {
-        String url = String.format(URL_FORMAT, ip);
+    public Future<AsnResponse> handle() {
+        String url = String.format(URL_FORMAT, asn);
         Request.Builder request = new Request.Builder().url(url).get();
 
         return getExecutorService().submit(() -> {
@@ -33,7 +33,7 @@ public class IPRequest extends BaseRequest<IPResponse> {
                 }
 
                 try {
-                    return gson.fromJson(response.body().string(), IPResponse.class);
+                    return gson.fromJson(response.body().string(), AsnResponse.class);
                 } catch (Exception ex) {
                     throw new ErrorResponseError();
                 }

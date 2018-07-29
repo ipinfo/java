@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ASNResponse {
+public class AsnResponse {
     private final String asn;
     private final String name;
     private final String country;
@@ -17,7 +17,7 @@ public class ASNResponse {
     private final List<Prefix> prefixes;
     private final List<Prefix> prefixes6;
 
-    public ASNResponse(String asn, String name, String country, String allocated, String registry, String domain, String numIps, List<Prefix> prefixes, List<Prefix> prefixes6) {
+    public AsnResponse(String asn, String name, String country, String allocated, String registry, String domain, String numIps, List<Prefix> prefixes, List<Prefix> prefixes6) {
         this.asn = asn;
         this.name = name;
         this.country = country;
@@ -31,7 +31,7 @@ public class ASNResponse {
 
     @Override
     public String toString() {
-        return "ASNResponse{" +
+        return "AsnResponse{" +
                 "asn='" + asn + '\'' +
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +

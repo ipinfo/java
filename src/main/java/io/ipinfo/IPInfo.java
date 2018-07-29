@@ -1,9 +1,9 @@
 package io.ipinfo;
 
-import io.ipinfo.model.ASNResponse;
-import io.ipinfo.model.IPResponse;
-import io.ipinfo.request.ASNRequest;
-import io.ipinfo.request.IPRequest;
+import io.ipinfo.model.AsnResponse;
+import io.ipinfo.model.IpResponse;
+import io.ipinfo.request.AsnRequest;
+import io.ipinfo.request.IpRequest;
 import okhttp3.OkHttpClient;
 
 import java.util.concurrent.ExecutorService;
@@ -30,19 +30,19 @@ public class IPInfo {
      * Lookup IP information using the IP.
      *
      * @param ip
-     * @return IPResponse future - This may throw a RateLimitedException inside ExecutionException when get() is called on it
+     * @return IpResponse future - This may throw a RateLimitedException inside ExecutionException when get() is called on it
      */
-    public Future<IPResponse> lookupIP(String ip) {
-        return new IPRequest(client, service, token, ip).handle();
+    public Future<IpResponse> lookupIp(String ip) {
+        return new IpRequest(client, service, token, ip).handle();
     }
 
     /**
      * Lookup ASN information using the AS number.
      *
      * @param asn
-     * @return ASNResponse future - This may throw a RateLimitedException inside ExecutionException when get() is called on it
+     * @return AsnResponse future - This may throw a RateLimitedException inside ExecutionException when get() is called on it
      */
-    public Future<ASNResponse> lookupASN(String asn) {
-        return new ASNRequest(client, service, token, asn).handle();
+    public Future<AsnResponse> lookupAsn(String asn) {
+        return new AsnRequest(client, service, token, asn).handle();
     }
 }
