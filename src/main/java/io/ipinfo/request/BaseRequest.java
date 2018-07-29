@@ -29,7 +29,9 @@ public abstract class BaseRequest<T> {
     public abstract Future<T> handle();
 
     public Response handleRequest(Request.Builder request) {
-        request.header("Authorization", Credentials.basic(token, ""));
+        request
+                .addHeader("Authorization", Credentials.basic(token, ""))
+                .addHeader("user-agent", "IPinfoClient/Java/1.0");
         try {
             return client.newCall(request.build()).execute();
         } catch (Exception e) {

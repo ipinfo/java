@@ -1,8 +1,8 @@
 package io.ipinfo.request;
 
-import io.ipinfo.errors.ErrorResponseError;
+import io.ipinfo.errors.ErrorResponseException;
 import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.AsnResponse;
+import io.ipinfo.model.IPResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -10,32 +10,32 @@ import okhttp3.Response;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class AsnRequest extends BaseRequest<AsnResponse> {
+public class IPRequest extends BaseRequest<IPResponse> {
     private final static String URL_FORMAT = "https://ipinfo.io/%s/json";
-    private final String asn;
+    private final String ip;
 
-    public AsnRequest(OkHttpClient client, ExecutorService executorService, String token, String asn) {
+    public IPRequest(OkHttpClient client, ExecutorService executorService, String token, String ip) {
         super(client, executorService, token);
-        this.asn = asn;
+        this.ip = ip;
     }
 
     @Override
-    public Future<AsnResponse> handle() {
-        String url = String.format(URL_FORMAT, asn);
+    public Future<IPResponse> handle() {
+        String url = String.format(URL_FORMAT, ip);
         Request.Builder request = new Request.Builder().url(url).get();
 
         return getExecutorService().submit(() -> {
             try (Response response = handleRequest(request)) {
-                if (response == null) return null;
+                if (response == null || response.body() == null) return null;
 
                 if (response.code() == 429) {
                     throw new RateLimitedException();
                 }
 
                 try {
-                    return gson.fromJson(response.body().string(), AsnResponse.class);
+                    return gson.fromJson(response.body().string(), IPResponse.class);
                 } catch (Exception ex) {
-                    throw new ErrorResponseError();
+                    throw new ErrorResponseException();
                 }
             }
         });

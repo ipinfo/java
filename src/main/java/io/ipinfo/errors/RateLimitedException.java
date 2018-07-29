@@ -1,4 +1,4 @@
 package io.ipinfo.errors;
 
-public class RateLimitedException extends RuntimeException {
+public class RateLimitedException extends IPInfoException {
 }
