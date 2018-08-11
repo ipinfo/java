@@ -20,4 +20,16 @@ public class Company {
                 ", type='" + type + '\'' +
                 '}';
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public String getType() {
+        return type;
+    }
 }

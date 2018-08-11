@@ -22,4 +22,21 @@ public class Prefix {
                 ", country='" + country + '\'' +
                 '}';
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getNetblock() {
+
+        return netblock;
+    }
 }

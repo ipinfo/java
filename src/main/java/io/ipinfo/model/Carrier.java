@@ -12,6 +12,18 @@ public class Carrier {
         this.mnc = mnc;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getMcc() {
+        return mcc;
+    }
+
+    public String getMnc() {
+        return mnc;
+    }
+
     @Override
     public String toString() {
         return "Carrier{" +

@@ -2,7 +2,7 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
 [![Travis](https://travis-ci.com/ipinfo/java-ipinfo.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java-ipinfo)
 
-An official java wrapper around ipinfo's API.
+An official java wrapper around IPinfo's API.
 
 ## Features:
 - IP Lookup
@@ -30,23 +30,15 @@ import io.ipinfo.IPInfo;
 import io.ipinfo.errors.RateLimitedException;
 import io.ipinfo.model.IPResponse;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 public class Main {
 
     public static void main(String... args) {
         IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").build();
 
-        Future<ASNResponse> responseFuture = ipInfo.lookupASN("AS7922");
-
         try {
-            System.out.println(responseFuture.get().toString());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            if (e.getCause() instanceof RateLimitedException) {
-                System.out.println("Rate limited");
-            }
+            IPResponse response = ipInfo.lookupIP("8.8.8.8");
+        } catch (RateLimitedException ex) {
+            // Handle rate limits here.
         }
     }
 }
@@ -59,23 +51,15 @@ import io.ipinfo.IPInfo;
 import io.ipinfo.errors.RateLimitedException;
 import io.ipinfo.model.IPResponse;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 public class Main {
 
     public static void main(String... args) {
         IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").build();
 
-        Future<ASNResponse> responseFuture = ipInfo.lookupASN("AS7922");
-
         try {
-            System.out.println(responseFuture.get().toString());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            if (e.getCause() instanceof RateLimitedException) {
-                System.out.println("Rate limited");
-            }
+            ASNResponse response = ipInfo.lookupASN("AS7922");
+        } catch (RateLimitedException ex) {
+            // Handle rate limits here.
         }
     }
 }
@@ -83,6 +67,12 @@ public class Main {
 
 ### Errors
 
-- ErrorResponseException: A runtime exception accessible through the ExecutionException of a future. This exception signals that something went wrong when mapping the API response to the wrapper.
+- ErrorResponseException: A runtime exception accessible through the ExecutionException of a future. This exception signals that something went wrong when mapping the API response to the wrapper. You probably can't recover from this exception.
+
 - RateLimitedException A runtime exception signalling that you've been rate limited.
+
+## Extra Information
+
+- This library is thread safe. Feel free to call the different endpoints from different threads.
+- This library uses square's http client. Please refer to their documentation to get information on more functionality you can use. 
 

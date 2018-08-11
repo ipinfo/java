@@ -29,6 +29,42 @@ public class ASNResponse {
         this.prefixes6 = prefixes6;
     }
 
+    public String getAsn() {
+        return asn;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getAllocated() {
+        return allocated;
+    }
+
+    public String getRegistry() {
+        return registry;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public String getNumIps() {
+        return numIps;
+    }
+
+    public List<Prefix> getPrefixes() {
+        return prefixes;
+    }
+
+    public List<Prefix> getPrefixes6() {
+        return prefixes6;
+    }
+
     @Override
     public String toString() {
         return "ASNResponse{" +

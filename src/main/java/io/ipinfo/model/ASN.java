@@ -16,6 +16,27 @@ public class ASN {
         this.type = type;
     }
 
+    public String getAsn() {
+        return asn;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public String getRoute() {
+        return route;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return "ASN{" +

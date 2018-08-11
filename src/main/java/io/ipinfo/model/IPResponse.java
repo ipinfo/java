@@ -1,6 +1,5 @@
 package io.ipinfo.model;
 
-
 public class IPResponse {
     private final String ip;
     private final String hostname;
@@ -28,6 +27,54 @@ public class IPResponse {
         this.asn = asn;
         this.company = company;
         this.carrier = carrier;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getLoc() {
+        return loc;
+    }
+
+    public String getPostal() {
+        return postal;
+    }
+
+    public String getOrg() {
+        return org;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public ASN getAsn() {
+        return asn;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public Carrier getCarrier() {
+        return carrier;
     }
 
     @Override
