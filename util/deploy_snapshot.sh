@@ -7,7 +7,7 @@ function mvn_deploy() {
 }
 
 
-if [ "$TRAVIS_REPO_SLUG" == "google/guava" ] && \
+if [ "$TRAVIS_REPO_SLUG" == "ipinfo/java-ipinfo" ] && \
    [ "$TRAVIS_JDK_VERSION" == "oraclejdk8" ] && \
    [ "$TRAVIS_PULL_REQUEST" == "false" ] && \
    [ "$TRAVIS_BRANCH" == "master" ]; then
