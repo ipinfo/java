@@ -53,6 +53,22 @@ public class IPResponse {
         return loc;
     }
 
+    public String getLatitude() {
+        try {
+            return loc.split(",")[0];
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public String getLongitude() {
+        try {
+            return loc.split(",")[1];
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
     public String getPostal() {
         return postal;
     }
