@@ -1,5 +1,6 @@
 package io.ipinfo;
 
+import io.ipinfo.cache.Cache;
 import io.ipinfo.errors.RateLimitedException;
 import io.ipinfo.model.ASNResponse;
 import io.ipinfo.model.IPResponse;
@@ -13,11 +14,13 @@ public class IPInfo {
     private final OkHttpClient client;
     private final String token;
     private final Map<String, String> countryMap;
+    private final Cache cache;
 
-    IPInfo(OkHttpClient client, String token, Map<String, String> countryMap) {
+    IPInfo(OkHttpClient client, String token, Map<String, String> countryMap, Cache cache) {
         this.client = client;
         this.token = token;
         this.countryMap = countryMap;
+        this.cache = cache;
     }
 
     public static void main(String... args) {
@@ -43,7 +46,12 @@ public class IPInfo {
      * @throws RateLimitedException
      */
     public IPResponse lookupIP(String ip) throws RateLimitedException {
-        return new IPRequest(client, token, ip).handle();
+        IPResponse response = cache.getIp(ip);
+        if (response != null) return response;
+
+        response = new IPRequest(client, token, ip).handle();
+        cache.setIp(ip, response);
+        return response;
     }
 
     /**
@@ -54,7 +62,12 @@ public class IPInfo {
      * @throws RateLimitedException
      */
     public ASNResponse lookupASN(String asn) throws RateLimitedException {
-        return new ASNRequest(client, token, asn).handle();
+        ASNResponse response = cache.getAsn(asn);
+        if (response != null) return response;
+
+        response = new ASNRequest(client, token, asn).handle();
+        cache.setAsn(asn, response);
+        return response;
     }
 
     /**

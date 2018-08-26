@@ -45,11 +45,11 @@ public class IPResponse {
         return region;
     }
 
-    public String getCountry() {
+    public String getCountryCode() {
         return country;
     }
 
-    public String getLoc() {
+    public String getLocation() {
         return loc;
     }
 
