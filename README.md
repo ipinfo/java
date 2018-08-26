@@ -1,16 +1,12 @@
-# Java-IPinfo: A java wrapper for the `IPInfo <https://ipinfo.io/>`_ API.
-#########################################################################
- 
+# Java-IPinfo: A java wrapper for the [IPinfo] (https://ipinfo.io/) API.
+
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
 [![Travis](https://travis-ci.com/ipinfo/java-ipinfo.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java-ipinfo)
 
 Java-IPinfo is a lightweight wrapper for the IPinfo API, which provides up-to-date IP address data.
 
-
-.. contents::
-.. section-numbering::
-
 ## Features:
+
 - IP Lookup
 - ASN Lookup
 
@@ -58,7 +54,7 @@ public class Main {
 
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
-            
+
             // Print out the hostname
             System.out.println(response.getHostname());
         } catch (RateLimitedException ex) {
@@ -83,7 +79,7 @@ public class Main {
 
         try {
             ASNResponse response = ipInfo.lookupASN("AS7922");
-            
+
             // Print out country name
             System.out.println(response.getCountry());
         } catch (RateLimitedException ex) {
@@ -121,7 +117,7 @@ public class Main {
 
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
-            
+
             // Print out the hostname
             System.out.println(response.getHostname());
         } catch (RateLimitedException ex) {
@@ -149,10 +145,10 @@ public class Main {
 
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
-            
+
             // Print out the country code
             System.out.println(response.getCountryCode());
-            
+
             // Print out the country name
             System.out.println(ipInfo.lookupCountryName(response.getCountryCode()));
         } catch (RateLimitedException ex) {
@@ -169,5 +165,5 @@ More language files can be found [here](https://country.io/data)
 ## Extra Information
 
 - This library is thread safe. Feel free to call the different endpoints from different threads.
-- This library uses square's http client. Please refer to their documentation to get information on more functionality you can use. 
+- This library uses square's http client. Please refer to their documentation to get information on more functionality you can use.
 
