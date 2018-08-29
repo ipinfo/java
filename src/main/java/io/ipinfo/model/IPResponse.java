@@ -1,5 +1,7 @@
 package io.ipinfo.model;
 
+import io.ipinfo.context.Context;
+
 public class IPResponse {
     private final String ip;
     private final String hostname;
@@ -13,6 +15,7 @@ public class IPResponse {
     private final ASN asn;
     private final Company company;
     private final Carrier carrier;
+    private transient Context context;
 
     public IPResponse(String ip, String hostname, String city, String region, String country, String loc, String postal, String org, String phone, ASN asn, Company company, Carrier carrier) {
         this.ip = ip;
@@ -27,6 +30,15 @@ public class IPResponse {
         this.asn = asn;
         this.company = company;
         this.carrier = carrier;
+    }
+
+    /**
+     * Set by the library for extra utility functions
+     *
+     * @param context
+     */
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public String getIp() {
@@ -47,6 +59,10 @@ public class IPResponse {
 
     public String getCountryCode() {
         return country;
+    }
+
+    public String getCountryName() {
+        return context.getCountryName(getCountryCode());
     }
 
     public String getLocation() {

@@ -9,7 +9,7 @@ import okhttp3.Response;
 
 
 public class ASNRequest extends BaseRequest<ASNResponse> {
-    private final static String URL_FORMAT = "https://ipinfo.io/%s/json";
+    private final static String URL_FORMAT = "https://ipinfo.io/%s";
     private final String asn;
 
     public ASNRequest(OkHttpClient client, String token, String asn) {

@@ -23,7 +23,9 @@ public abstract class BaseRequest<T> {
     public Response handleRequest(Request.Builder request) {
         request
                 .addHeader("Authorization", Credentials.basic(token, ""))
-                .addHeader("user-agent", "IPinfoClient/Java/1.0");
+                .addHeader("user-agent", "IPinfoClient/Java/1.0")
+                .addHeader("Content-Type", "application/json");
+
         try {
             return client.newCall(request.build()).execute();
         } catch (Exception e) {

@@ -8,7 +8,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class IPRequest extends BaseRequest<IPResponse> {
-    private final static String URL_FORMAT = "https://ipinfo.io/%s/json";
+    private final static String URL_FORMAT = "https://ipinfo.io/%s";
     private final String ip;
 
     public IPRequest(OkHttpClient client, String token, String ip) {

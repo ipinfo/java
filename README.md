@@ -150,7 +150,7 @@ public class Main {
             System.out.println(response.getCountryCode());
 
             // Print out the country name
-            System.out.println(ipInfo.lookupCountryName(response.getCountryCode()));
+            System.out.println(response.getCountryName());
         } catch (RateLimitedException ex) {
             // Handle rate limits here.
         }
@@ -161,6 +161,34 @@ public class Main {
 This file must follow the same layout as seen [here](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/en_US.json)
 
 More language files can be found [here](https://country.io/data)
+
+### Location Information
+
+This library provides an easy way to get the latitude and longitude of an IP Address:
+
+```java
+import io.ipinfo.IPInfo;
+import io.ipinfo.errors.RateLimitedException;
+import io.ipinfo.model.IPResponse;
+
+public class Main {
+
+    public static void main(String... args) {
+        IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").setCountryFile(new File("path/to/file.json")).build();
+
+        try {
+            IPResponse response = ipInfo.lookupIP("8.8.8.8");
+
+            // Print out the Latitude and Longitude
+            System.out.println(response.getLatitude());
+            System.out.println(response.getLongitude());
+
+        } catch (RateLimitedException ex) {
+            // Handle rate limits here.
+        }
+    }
+}
+```
 
 ## Extra Information
 

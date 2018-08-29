@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.ipinfo.cache.Cache;
 import io.ipinfo.cache.SimpleCache;
+import io.ipinfo.context.Context;
 import okhttp3.OkHttpClient;
 
 import java.io.File;
@@ -53,6 +54,6 @@ public class IPInfoBuilder {
             map = Collections.unmodifiableMap(new HashMap<>());
         }
 
-        return new IPInfo(client, token, map, cache);
+        return new IPInfo(client, new Context(map), token, cache);
     }
 }

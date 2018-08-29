@@ -1,6 +1,7 @@
 package io.ipinfo;
 
 import io.ipinfo.cache.Cache;
+import io.ipinfo.context.Context;
 import io.ipinfo.errors.RateLimitedException;
 import io.ipinfo.model.ASNResponse;
 import io.ipinfo.model.IPResponse;
@@ -8,18 +9,16 @@ import io.ipinfo.request.ASNRequest;
 import io.ipinfo.request.IPRequest;
 import okhttp3.OkHttpClient;
 
-import java.util.Map;
-
 public class IPInfo {
     private final OkHttpClient client;
+    private final Context context;
     private final String token;
-    private final Map<String, String> countryMap;
     private final Cache cache;
 
-    IPInfo(OkHttpClient client, String token, Map<String, String> countryMap, Cache cache) {
+    IPInfo(OkHttpClient client, Context context, String token, Cache cache) {
         this.client = client;
+        this.context = context;
         this.token = token;
-        this.countryMap = countryMap;
         this.cache = cache;
     }
 
@@ -50,6 +49,8 @@ public class IPInfo {
         if (response != null) return response;
 
         response = new IPRequest(client, token, ip).handle();
+        response.setContext(context);
+
         cache.setIp(ip, response);
         return response;
     }
@@ -66,17 +67,9 @@ public class IPInfo {
         if (response != null) return response;
 
         response = new ASNRequest(client, token, asn).handle();
+        response.setContext(context);
+
         cache.setAsn(asn, response);
         return response;
-    }
-
-    /**
-     * Looks up a country name.
-     *
-     * @param countryCode
-     * @return The name of the country.
-     */
-    public String lookupCountryName(String countryCode) {
-        return countryMap.getOrDefault(countryCode, null);
     }
 }

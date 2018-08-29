@@ -2,6 +2,7 @@ package io.ipinfo.model;
 
 
 import com.google.gson.annotations.SerializedName;
+import io.ipinfo.context.Context;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ASNResponse {
     private final String numIps;
     private final List<Prefix> prefixes;
     private final List<Prefix> prefixes6;
+    private transient Context context;
 
     public ASNResponse(String asn, String name, String country, String allocated, String registry, String domain, String numIps, List<Prefix> prefixes, List<Prefix> prefixes6) {
         this.asn = asn;
@@ -27,6 +29,15 @@ public class ASNResponse {
         this.numIps = numIps;
         this.prefixes = prefixes;
         this.prefixes6 = prefixes6;
+    }
+
+    /**
+     * Set by the library for extra utility functions
+     *
+     * @param context
+     */
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public String getAsn() {
