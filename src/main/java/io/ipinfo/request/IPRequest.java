@@ -24,10 +24,6 @@ public class IPRequest extends BaseRequest<IPResponse> {
         try (Response response = handleRequest(request)) {
             if (response == null || response.body() == null) return null;
 
-            if (response.code() == 429) {
-                throw new RateLimitedException();
-            }
-
             try {
                 return gson.fromJson(response.body().string(), IPResponse.class);
             } catch (Exception ex) {

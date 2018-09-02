@@ -25,10 +25,6 @@ public class ASNRequest extends BaseRequest<ASNResponse> {
         try (Response response = handleRequest(request)) {
             if (response == null || response.body() == null) return null;
 
-            if (response.code() == 429) {
-                throw new RateLimitedException();
-            }
-
             try {
                 return gson.fromJson(response.body().string(), ASNResponse.class);
             } catch (Exception ex) {

@@ -1,7 +1,9 @@
 package io.ipinfo.request;
 
 import com.google.gson.Gson;
+import io.ipinfo.errors.ErrorResponseException;
 import io.ipinfo.errors.RateLimitedException;
+import io.ipinfo.model.ASNResponse;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -20,17 +22,28 @@ public abstract class BaseRequest<T> {
 
     public abstract T handle() throws RateLimitedException;
 
-    public Response handleRequest(Request.Builder request) {
+    public Response handleRequest(Request.Builder request) throws RateLimitedException {
         request
                 .addHeader("Authorization", Credentials.basic(token, ""))
                 .addHeader("user-agent", "IPinfoClient/Java/1.0")
                 .addHeader("Content-Type", "application/json");
 
+        Response response;
+
         try {
-            return client.newCall(request.build()).execute();
+            response = client.newCall(request.build()).execute();
         } catch (Exception e) {
-            return null;
+            throw new ErrorResponseException(e);
         }
+
+        // Sanity check
+        if (response == null) return null;
+
+        if (response.code() == 429) {
+            throw new RateLimitedException();
+        }
+
+        return response;
     }
 }
 
