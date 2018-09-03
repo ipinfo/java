@@ -65,13 +65,18 @@
             <version>3.9.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>
-        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 
         <finalName>${project.name}-${project.version}</finalName>
         <resources>
