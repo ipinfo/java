@@ -1,10 +1,10 @@
-package io.ipinfo;
+package io.ipinfo.api;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import io.ipinfo.cache.Cache;
-import io.ipinfo.cache.SimpleCache;
-import io.ipinfo.context.Context;
+import io.ipinfo.api.cache.Cache;
+import io.ipinfo.api.cache.SimpleCache;
+import io.ipinfo.api.context.Context;
 import okhttp3.OkHttpClient;
 
 import java.io.File;

@@ -43,9 +43,9 @@ Dependency:
 
 
 ````java
-import io.ipinfo.IPInfo;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 
 public class Main {
 
@@ -68,9 +68,9 @@ public class Main {
 #### ASN Information
 
 ````java
-import io.ipinfo.IPInfo;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 
 public class Main {
 
@@ -105,9 +105,9 @@ The default cache length is 1 day, this can be changed by calling the SimpleCach
 
 
 ```java
-import io.ipinfo.IPInfo;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 
 public class Main {
 
@@ -134,9 +134,9 @@ This library provides a system to lookup country names through ISO2 country code
 By default, this translation exists for English (United States). If you wish to provide a different language mapping, just use the following system in the builder:
 
 ```java
-import io.ipinfo.IPInfo;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 
 public class Main {
 
@@ -167,9 +167,9 @@ More language files can be found [here](https://country.io/data)
 This library provides an easy way to get the latitude and longitude of an IP Address:
 
 ```java
-import io.ipinfo.IPInfo;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 
 public class Main {
 

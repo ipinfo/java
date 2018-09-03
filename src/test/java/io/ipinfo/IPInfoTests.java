@@ -1,8 +1,9 @@
 package io.ipinfo;
 
-import io.ipinfo.errors.ErrorResponseException;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.errors.ErrorResponseException;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

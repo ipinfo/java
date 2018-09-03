@@ -1,9 +1,8 @@
-package io.ipinfo.request;
+package io.ipinfo.api.request;
 
 import com.google.gson.Gson;
-import io.ipinfo.errors.ErrorResponseException;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.ASNResponse;
+import io.ipinfo.api.errors.ErrorResponseException;
+import io.ipinfo.api.errors.RateLimitedException;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

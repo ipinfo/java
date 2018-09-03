@@ -1,4 +1,4 @@
-package io.ipinfo.context;
+package io.ipinfo.api.context;
 
 import java.util.Map;
 

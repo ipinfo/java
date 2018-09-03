@@ -1,7 +1,7 @@
-package io.ipinfo.cache;
+package io.ipinfo.api.cache;
 
-import io.ipinfo.model.ASNResponse;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.model.ASNResponse;
+import io.ipinfo.api.model.IPResponse;
 
 import java.time.Duration;
 import java.time.Instant;

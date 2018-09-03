@@ -1,4 +1,4 @@
-package io.ipinfo.model;
+package io.ipinfo.api.model;
 
 public class Prefix {
     private final String netblock;

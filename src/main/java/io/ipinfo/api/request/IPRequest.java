@@ -1,8 +1,8 @@
-package io.ipinfo.request;
+package io.ipinfo.api.request;
 
-import io.ipinfo.errors.ErrorResponseException;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.IPResponse;
+import io.ipinfo.api.errors.ErrorResponseException;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

@@ -1,8 +1,8 @@
-package io.ipinfo.model;
+package io.ipinfo.api.model;
 
 
 import com.google.gson.annotations.SerializedName;
-import io.ipinfo.context.Context;
+import io.ipinfo.api.context.Context;
 
 import java.util.List;
 

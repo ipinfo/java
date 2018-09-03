@@ -1,12 +1,12 @@
-package io.ipinfo;
+package io.ipinfo.api;
 
-import io.ipinfo.cache.Cache;
-import io.ipinfo.context.Context;
-import io.ipinfo.errors.RateLimitedException;
-import io.ipinfo.model.ASNResponse;
-import io.ipinfo.model.IPResponse;
-import io.ipinfo.request.ASNRequest;
-import io.ipinfo.request.IPRequest;
+import io.ipinfo.api.cache.Cache;
+import io.ipinfo.api.context.Context;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.ASNResponse;
+import io.ipinfo.api.model.IPResponse;
+import io.ipinfo.api.request.ASNRequest;
+import io.ipinfo.api.request.IPRequest;
 import okhttp3.OkHttpClient;
 
 public class IPInfo {

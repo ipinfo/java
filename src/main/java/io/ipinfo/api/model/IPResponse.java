@@ -1,6 +1,6 @@
-package io.ipinfo.model;
+package io.ipinfo.api.model;
 
-import io.ipinfo.context.Context;
+import io.ipinfo.api.context.Context;
 
 public class IPResponse {
     private final String ip;

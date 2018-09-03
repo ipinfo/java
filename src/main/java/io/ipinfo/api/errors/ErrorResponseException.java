@@ -1,4 +1,4 @@
-package io.ipinfo.errors;
+package io.ipinfo.api.errors;
 
 public class ErrorResponseException extends RuntimeException {
 

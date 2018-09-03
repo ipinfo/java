@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.ipinfo</groupId>
-    <artifactId>java-ipinfo</artifactId>
+    <artifactId>ipinfo-api</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -19,14 +19,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <name>Java-IPInfo</name>
+    <name>IPinfo-API</name>
 
-    <url>https://github.com/ipinfo/java-ipinfo</url>
-    <description>Java wrapper for the IPInfo API</description>
+    <url>https://github.com/ipinfo/java</url>
+    <description>Java wrapper for the IPinfo API</description>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/ipinfo/java-ipinfo/issues</url>
+        <url>https://github.com/ipinfo/java/issues</url>
     </issueManagement>
 
     <licenses>
@@ -38,9 +38,9 @@
     </licenses>
 
     <scm>
-        <url>git@github.com:ipinfo/java-ipinfo.git</url>
-        <connection>scm:git:git@github.com:ipinfo/java-ipinfo.git</connection>
-        <developerConnection>scm:git:git@github.com:ipinfo/java-ipinfo.git</developerConnection>
+        <url>git@github.com:ipinfo/java.git</url>
+        <connection>scm:git:git@github.com:ipinfo/java.git</connection>
+        <developerConnection>scm:git:git@github.com:ipinfo/java.git</developerConnection>
     </scm>
 
     <developers>
