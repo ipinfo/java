@@ -30,7 +30,7 @@ Dependency:
 <dependencies>
     <dependency>
         <groupId>io.ipinfo</groupId>
-        <artifactId>java-ipinfo</artifactId>
+        <artifactId>ipinfo-api</artifactId>
         <version>1.0-SNAPSHOT</version>
         <scope>compile</scope>
     </dependency>
