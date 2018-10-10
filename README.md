@@ -1,18 +1,27 @@
-# Java-IPinfo: A java wrapper for the [IPinfo](https://ipinfo.io/) API.
+# [<img src="https://ipinfo.io/static/ipinfo-small.svg" alt="IPinfo" width="24"/>](https://ipinfo.io/) IPinfo Java Client Library
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
 [![Travis](https://travis-ci.com/ipinfo/java.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java)
 
-Java-IPinfo is a lightweight wrapper for the IPinfo API, which provides up-to-date IP address data.
+This is the officialJava client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
+ - IP geolocation (city, region, country, postal code, latitude and longitude)
+ - ASN details (ISP or network operator, associated domain name, and type, such as business, hosting or company)
+ - Company details (the name and domain of the business that uses the IP address)
+ - Carrier details (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
-## Features:
 
-- IP Lookup
-- ASN Lookup
 
-## Usage
+### Getting Started
 
-### Maven
+You'll need an IPinfo API access token, which you can get by singing up for a free account at [https://ipinfo.io/signup](https://ipinfo.io/signup?ref=lib-$LANGUAGE). 
+
+The free plan is limited to 1,000 requests a day, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing?ref=lib-$LANGUAGE)
+
+#### Installation
+
+##### Maven
+Add these values to your pom.xml file:
+
 Repository:
 
 ```xml
@@ -37,9 +46,9 @@ Dependency:
 </dependencies>
 ```
 
-### Examples
+#### Quick Start
 
-#### IP Information
+##### IP Information
 
 
 ````java
@@ -65,7 +74,7 @@ public class Main {
 ````
 
 
-#### ASN Information
+##### ASN Information
 
 ````java
 import io.ipinfo.api.IPInfo;
@@ -89,13 +98,13 @@ public class Main {
 }
 ````
 
-### Errors
+#### Errors
 
 - ErrorResponseException: A runtime exception accessible through the ExecutionException of a future. This exception signals that something went wrong when mapping the API response to the wrapper. You probably can't recover from this exception.
 
 - RateLimitedException An exception signalling that you've been rate limited.
 
-### Caching
+#### Caching
 
 This library provides a very simple caching system accessible in `SimpleCache`. Simple cache is an in memory caching system that resets every time you restart your code.
 
@@ -127,7 +136,7 @@ public class Main {
 }
 ```
 
-### Country Name Lookup
+#### Country Name Lookup
 
 This library provides a system to lookup country names through ISO2 country codes.
 
@@ -162,7 +171,7 @@ This file must follow the same layout as seen [here](https://github.com/ipinfo/j
 
 More language files can be found [here](https://country.io/data)
 
-### Location Information
+#### Location Information
 
 This library provides an easy way to get the latitude and longitude of an IP Address:
 
@@ -190,8 +199,20 @@ public class Main {
 }
 ```
 
-## Extra Information
+#### Extra Information
 
 - This library is thread safe. Feel free to call the different endpoints from different threads.
 - This library uses square's http client. Please refer to their documentation to get information on more functionality you can use.
 
+
+### Other Libraries
+
+There are official IPinfo client libraries available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API. 
+
+https://ipinfo.io/developers/libraries
+
+### About IPinfo
+
+Founded in 2013, IPinfo prides itself on being the most reliable, accurate, and in-depth source of IP address data available anywhere. We process terabytes of data to produce our custom IP geolocation, company, carrier and IP type data sets. Our API handles over 12 billion requests a month for 100,000 businesses and developers.
+
+[![image](https://avatars3.githubusercontent.com/u/15721521?s=128&u=7bb7dde5c4991335fb234e68a30971944abc6bf3&v=4)](https://ipinfo.io/)
