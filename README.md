@@ -3,12 +3,11 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
 [![Travis](https://travis-ci.com/ipinfo/java.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java)
 
-This is the officialJava client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
+This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
  - IP geolocation (city, region, country, postal code, latitude and longitude)
  - ASN details (ISP or network operator, associated domain name, and type, such as business, hosting or company)
  - Company details (the name and domain of the business that uses the IP address)
  - Carrier details (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
-
 
 
 ### Getting Started
