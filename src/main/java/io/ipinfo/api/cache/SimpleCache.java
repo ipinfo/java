@@ -70,8 +70,7 @@ public class SimpleCache implements Cache {
             long time = expiration.addTo(creation).getLong(ChronoField.INSTANT_SECONDS);
             long now = System.currentTimeMillis();
 
-            if (now > time) return false;
-            return true;
+            return now <= time;
         }
 
         public T getData() {

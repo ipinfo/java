@@ -36,8 +36,6 @@ public class IPInfoTests {
 
     @Test
     void testASNWithoutAuth() {
-        assertThrows(ErrorResponseException.class, () -> {
-            ipInfo.lookupASN("AS7922");
-        });
+        assertThrows(ErrorResponseException.class, () -> ipInfo.lookupASN("AS7922"));
     }
 }
