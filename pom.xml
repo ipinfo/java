@@ -48,7 +48,13 @@
             <id>aaomidi</id>
             <name>Amir Omidi</name>
             <email>amir@ipinfo.io</email>
-            <organization>IPInfo</organization>
+            <organization>IPinfo</organization>
+        </developer>
+        <developer>
+            <id>ipinfo</id>
+            <name>IPinfo</name>
+            <email>support@ipinfo.io</email>
+            <organization>IPinfo</organization>
         </developer>
     </developers>
 
