@@ -34,7 +34,7 @@ public class ASNResponse {
     /**
      * Set by the library for extra utility functions
      *
-     * @param context
+     * @param context for country information
      */
     public void setContext(Context context) {
         this.context = context;

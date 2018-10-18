@@ -31,7 +31,7 @@ public class IPInfo {
     /**
      * Gets the builder for IPInfo
      *
-     * @return
+     * @return IPInfoBuilder object
      */
     public static IPInfoBuilder builder() {
         return new IPInfoBuilder();
@@ -40,9 +40,9 @@ public class IPInfo {
     /**
      * Lookup IP information using the IP.
      *
-     * @param ip
-     * @return IPResponse
-     * @throws RateLimitedException
+     * @param ip the ip string to lookup - accepts both ipv4 and ipv6.
+     * @return IPResponse response from the api.
+     * @throws RateLimitedException an exception when your api key has been rate limited.
      */
     public IPResponse lookupIP(String ip) throws RateLimitedException {
         IPResponse response = cache.getIp(ip);
@@ -58,9 +58,9 @@ public class IPInfo {
     /**
      * Lookup ASN information using the AS number.
      *
-     * @param asn
-     * @return ASNResponse
-     * @throws RateLimitedException
+     * @param asn the asn string to lookup.
+     * @return ASNResponse response from the api.
+     * @throws RateLimitedException an exception when your api key has been rate limited.
      */
     public ASNResponse lookupASN(String asn) throws RateLimitedException {
         ASNResponse response = cache.getAsn(asn);
