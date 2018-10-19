@@ -21,17 +21,6 @@ The free plan is limited to 1,000 requests a day, and doesn't include some of th
 ##### Maven
 Add these values to your pom.xml file:
 
-Repository:
-
-```xml
-<repositories>
-    <repository>
-        <id>sonatype-snapshots</id>
-        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </repository>
-</repositories>
-```
-
 Dependency:
 
 ```xml
@@ -39,7 +28,7 @@ Dependency:
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-api</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
