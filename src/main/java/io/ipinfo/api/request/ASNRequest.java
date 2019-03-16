@@ -28,7 +28,7 @@ public class ASNRequest extends BaseRequest<ASNResponse> {
             try {
                 return gson.fromJson(response.body().string(), ASNResponse.class);
             } catch (Exception ex) {
-                throw new ErrorResponseException();
+                throw new ErrorResponseException(ex);
             }
         }
     }
