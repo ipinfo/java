@@ -27,7 +27,7 @@ public class IPRequest extends BaseRequest<IPResponse> {
             try {
                 return gson.fromJson(response.body().string(), IPResponse.class);
             } catch (Exception ex) {
-                throw new ErrorResponseException();
+                throw new ErrorResponseException(ex);
             }
         }
     }
