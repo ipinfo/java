@@ -4,21 +4,22 @@
 [![Travis](https://travis-ci.com/ipinfo/java.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java)
 
 This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
- - IP geolocation (city, region, country, postal code, latitude and longitude)
- - ASN details (ISP or network operator, associated domain name, and type, such as business, hosting or company)
- - Company details (the name and domain of the business that uses the IP address)
- - Carrier details (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
+- IP geolocation (city, region, country, postal code, latitude and longitude)
+- ASN details (ISP or network operator, associated domain name, and type, such as business, hosting or company)
+- Company details (the name and domain of the business that uses the IP address)
+- Carrier details (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
 ### Getting Started
 
-You'll need an IPinfo API access token, which you can get by singing up for a free account at [https://ipinfo.io/signup](https://ipinfo.io/signup?ref=lib-$LANGUAGE). 
+You'll need an IPinfo API access token, which you can get by singing up for a free account at [https://ipinfo.io/signup](https://ipinfo.io/signup?ref=lib-$LANGUAGE).
 
 The free plan is limited to 1,000 requests a day, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing?ref=lib-$LANGUAGE)
 
 #### Installation
 
 ##### Maven
+
 Add these values to your pom.xml file:
 
 Dependency:
@@ -37,7 +38,6 @@ Dependency:
 #### Quick Start
 
 ##### IP Information
-
 
 ````java
 import io.ipinfo.api.IPInfo;
@@ -60,7 +60,6 @@ public class Main {
     }
 }
 ````
-
 
 ##### ASN Information
 
@@ -99,7 +98,6 @@ This library provides a very simple caching system accessible in `SimpleCache`. 
 If you prefer a different caching methodology, you may use the `Cache` interface and implement your own caching system around your own infrastructure.
 
 The default cache length is 1 day, this can be changed by calling the SimpleCache constructor yourself.
-
 
 ```java
 import io.ipinfo.api.IPInfo;
@@ -192,10 +190,9 @@ public class Main {
 - This library is thread safe. Feel free to call the different endpoints from different threads.
 - This library uses square's http client. Please refer to their documentation to get information on more functionality you can use.
 
-
 ### Other Libraries
 
-There are official IPinfo client libraries available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API. 
+There are official IPinfo client libraries available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API.
 
 https://ipinfo.io/developers/libraries
 
