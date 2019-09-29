@@ -36,7 +36,6 @@ public class Prefix {
     }
 
     public String getNetblock() {
-
         return netblock;
     }
 }

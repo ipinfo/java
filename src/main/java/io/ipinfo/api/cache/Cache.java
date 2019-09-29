@@ -41,6 +41,7 @@ public interface Cache {
 
     /**
      * Clears all entries in the cache.
+     *
      * @return if clear was successful.
      */
     boolean clear();

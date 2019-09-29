@@ -21,7 +21,6 @@ public class ASN {
     }
 
     public String getName() {
-
         return name;
     }
 

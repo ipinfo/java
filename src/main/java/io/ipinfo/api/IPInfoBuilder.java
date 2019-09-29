@@ -16,7 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IPInfoBuilder {
-    private File countryFile = new File(this.getClass().getClassLoader().getResource("en_US.json").getFile());
+    private File countryFile =
+            new File(this.getClass().getClassLoader().getResource("en_US.json").getFile());
     private OkHttpClient client = new OkHttpClient.Builder().build();
     private String token = "";
     private Cache cache = new SimpleCache(Duration.ofDays(1));

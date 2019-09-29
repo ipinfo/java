@@ -22,8 +22,7 @@ public abstract class BaseRequest<T> {
     public abstract T handle() throws RateLimitedException;
 
     public Response handleRequest(Request.Builder request) throws RateLimitedException {
-        request
-                .addHeader("Authorization", Credentials.basic(token, ""))
+        request.addHeader("Authorization", Credentials.basic(token, ""))
                 .addHeader("user-agent", "IPinfoClient/Java/1.0")
                 .addHeader("Content-Type", "application/json");
 
@@ -36,7 +35,9 @@ public abstract class BaseRequest<T> {
         }
 
         // Sanity check
-        if (response == null) return null;
+        if (response == null) {
+            return null;
+        }
 
         if (response.code() == 429) {
             throw new RateLimitedException();
@@ -45,4 +46,3 @@ public abstract class BaseRequest<T> {
         return response;
     }
 }
-
