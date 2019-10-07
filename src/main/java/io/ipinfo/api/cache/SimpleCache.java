@@ -21,7 +21,9 @@ public class SimpleCache implements Cache {
     @Override
     public IPResponse getIp(String ip) {
         Payload<IPResponse> payload = ipCache.get(ip);
-        if (payload == null || payload.hasExpired()) return null;
+        if (payload == null || payload.hasExpired()) {
+            return null;
+        }
 
         return payload.data;
     }
@@ -29,7 +31,9 @@ public class SimpleCache implements Cache {
     @Override
     public ASNResponse getAsn(String asn) {
         Payload<ASNResponse> payload = asnCache.get(asn);
-        if (payload == null || payload.hasExpired()) return null;
+        if (payload == null || payload.hasExpired()) {
+            return null;
+        }
 
         return payload.data;
     }
@@ -53,7 +57,6 @@ public class SimpleCache implements Cache {
         return true;
     }
 
-
     private class Payload<T> {
         final T data;
         final Instant creation;
@@ -63,7 +66,6 @@ public class SimpleCache implements Cache {
             this.data = data;
             creation = Instant.now();
             this.expiration = duration;
-
         }
 
         public boolean hasExpired() {

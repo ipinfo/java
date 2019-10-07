@@ -46,7 +46,9 @@ public class IPInfo {
      */
     public IPResponse lookupIP(String ip) throws RateLimitedException {
         IPResponse response = cache.getIp(ip);
-        if (response != null) return response;
+        if (response != null) {
+            return response;
+        }
 
         response = new IPRequest(client, token, ip).handle();
         response.setContext(context);
@@ -64,7 +66,9 @@ public class IPInfo {
      */
     public ASNResponse lookupASN(String asn) throws RateLimitedException {
         ASNResponse response = cache.getAsn(asn);
-        if (response != null) return response;
+        if (response != null) {
+            return response;
+        }
 
         response = new ASNRequest(client, token, asn).handle();
         response.setContext(context);
