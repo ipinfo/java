@@ -9,33 +9,28 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class IPInfoTests {
+public class IPInfoTest {
     private IPInfo ipInfo;
 
-    @BeforeEach
-    void initAll() {
-        ipInfo = IPInfo.builder().build();
-    }
-
     @Test
-    void testGoogleDNS() {
+    public void testGoogleDNS() {
+        ipInfo = IPInfo.builder().build();
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
-
             assertAll("Country Code",
                     () -> assertEquals(response.getCountryCode(), "US"),
                     () -> assertEquals(response.getCountryName(), "United States"),
-                    () -> assertEquals(response.getHostname(), "google-public-dns-a.google.com"),
+                    () -> assertEquals(response.getHostname(), "dns.google"),
                     () -> assertEquals(response.getIp(), "8.8.8.8")
             );
-
         } catch (RateLimitedException e) {
             fail(e);
         }
     }
 
     @Test
-    void testASNWithoutAuth() {
+    public void testASNWithoutAuth() {
+        ipInfo = IPInfo.builder().build();
         assertThrows(ErrorResponseException.class, () -> ipInfo.lookupASN("AS7922"));
     }
 }
