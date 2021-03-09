@@ -42,7 +42,9 @@ public class IPInfoBuilder {
     }
 
     public IPInfo build() {
-        Type type = new TypeToken<Map<String, String>>(){}.getType();
+        Type type = new TypeToken<Map<String, String>>() {
+        }.getType();
+
         Gson gson = new Gson();
         Map<String, String> map;
 
