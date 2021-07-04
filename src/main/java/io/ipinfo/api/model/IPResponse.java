@@ -15,9 +15,13 @@ public class IPResponse {
     private final ASN asn;
     private final Company company;
     private final Carrier carrier;
+    private final Privacy privacy;
+    private final Domains domains;
     private transient Context context;
 
-    public IPResponse(String ip, String hostname, String city, String region, String country, String loc, String postal, String org, String phone, ASN asn, Company company, Carrier carrier) {
+    public IPResponse(String ip, String hostname, String city, String region, String country,
+                      String loc, String postal, String org, String phone, ASN asn, Company company,
+                      Carrier carrier,Privacy privacy,Domains domains) {
         this.ip = ip;
         this.hostname = hostname;
         this.city = city;
@@ -30,6 +34,8 @@ public class IPResponse {
         this.asn = asn;
         this.company = company;
         this.carrier = carrier;
+        this.privacy=privacy;
+        this.domains=domains;
     }
 
     /**
@@ -109,6 +115,14 @@ public class IPResponse {
         return carrier;
     }
 
+    public Privacy getPrivacy(){
+        return privacy;
+    }
+
+    public Domains getDomains() {
+        return domains;
+    }
+
     @Override
     public String toString() {
         return "IPResponse{" +
@@ -124,6 +138,8 @@ public class IPResponse {
                 ", asn=" + asn +
                 ", company=" + company +
                 ", carrier=" + carrier +
+                ", privacy=" + privacy +
+                ", domains=" + domains +
                 '}';
     }
 }
