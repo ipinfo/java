@@ -17,20 +17,20 @@ public class IPInfoTest {
         ipInfo = IPInfo.builder().build();
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
+            System.out.println(response.toString());
             assertAll("Country Code",
                     () -> assertEquals(response.getCountryCode(), "US"),
                     () -> assertEquals(response.getCountryName(), "United States"),
                     () -> assertEquals(response.getHostname(), "dns.google"),
-                    () -> assertEquals(response.getIp(), "8.8.8.8")
+                    () -> assertEquals(response.getIp(), "8.8.8.8"),
+                    () -> assertEquals(response.getPrivacy().getProxy(), false),
+                    () -> assertEquals(response.getPrivacy().getHosting(), false),
+                    () -> assertEquals(response.getPrivacy().getVpn(), false),
+                    () -> assertEquals(response.getPrivacy().getTor(), false),
+                    () -> assertEquals(response.getDomains().getDomains().size(), 5)
             );
         } catch (RateLimitedException e) {
             fail(e);
         }
-    }
-
-    @Test
-    public void testASNWithoutAuth() {
-        ipInfo = IPInfo.builder().build();
-        assertThrows(ErrorResponseException.class, () -> ipInfo.lookupASN("AS7922"));
     }
 }
