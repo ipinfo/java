@@ -10,18 +10,19 @@ public class IPResponse {
     private final String country;
     private final String loc;
     private final String postal;
+    private final String timezone;
     private final String org;
-    private final String phone;
     private final ASN asn;
     private final Company company;
     private final Carrier carrier;
     private final Privacy privacy;
+    private final Abuse abuse;
     private final Domains domains;
     private transient Context context;
 
     public IPResponse(String ip, String hostname, String city, String region, String country,
-                      String loc, String postal, String org, String phone, ASN asn, Company company,
-                      Carrier carrier,Privacy privacy,Domains domains) {
+                      String loc, String postal, String timezone, String org, ASN asn, Company company,
+                      Carrier carrier, Privacy privacy, Abuse abuse, Domains domains) {
         this.ip = ip;
         this.hostname = hostname;
         this.city = city;
@@ -29,13 +30,15 @@ public class IPResponse {
         this.country = country;
         this.loc = loc;
         this.postal = postal;
+        this.timezone = timezone;
         this.org = org;
-        this.phone = phone;
         this.asn = asn;
         this.company = company;
         this.carrier = carrier;
-        this.privacy=privacy;
-        this.domains=domains;
+        this.privacy = privacy;
+        this.abuse = abuse;
+        this.domains = domains;
+
     }
 
     /**
@@ -95,12 +98,12 @@ public class IPResponse {
         return postal;
     }
 
-    public String getOrg() {
-        return org;
+    public String getTimezone() {
+        return timezone;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getOrg() {
+        return org;
     }
 
     public ASN getAsn() {
@@ -119,6 +122,10 @@ public class IPResponse {
         return privacy;
     }
 
+    public Abuse getAbuse() {
+        return abuse;
+    }
+
     public Domains getDomains() {
         return domains;
     }
@@ -133,12 +140,13 @@ public class IPResponse {
                 ", country='" + country + '\'' +
                 ", loc='" + loc + '\'' +
                 ", postal='" + postal + '\'' +
+                ", timezone='" + timezone + '\'' +
                 ", org='" + org + '\'' +
-                ", phone='" + phone + '\'' +
                 ", asn=" + asn +
                 ", company=" + company +
                 ", carrier=" + carrier +
                 ", privacy=" + privacy +
+                ", abuse=" + abuse +
                 ", domains=" + domains +
                 '}';
     }
