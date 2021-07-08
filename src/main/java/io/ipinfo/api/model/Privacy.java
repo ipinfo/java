@@ -6,7 +6,7 @@ public class Privacy {
     private final boolean tor;
     private final boolean hosting;
 
-    public Privacy(boolean vpn,boolean proxy,boolean tor,boolean hosting) {
+    public Privacy(boolean vpn, boolean proxy, boolean tor, boolean hosting) {
         this.vpn = vpn;
         this.proxy = proxy;
         this.tor = tor;

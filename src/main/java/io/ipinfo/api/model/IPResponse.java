@@ -118,7 +118,7 @@ public class IPResponse {
         return carrier;
     }
 
-    public Privacy getPrivacy(){
+    public Privacy getPrivacy() {
         return privacy;
     }
 

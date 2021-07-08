@@ -7,7 +7,8 @@ public class Abuse {
     private final String name;
     private final String network;
     private final String phone;
-    public Abuse(String address,String country,String email,String name, String network, String phone) {
+
+    public Abuse(String address, String country, String email, String name, String network, String phone) {
         this.address = address;
         this.country = country;
         this.email = email;
@@ -15,6 +16,7 @@ public class Abuse {
         this.network = network;
         this.phone = phone;
     }
+
     @Override
     public String toString() {
         return "Abuse{" +
@@ -26,6 +28,7 @@ public class Abuse {
                 ", phone='" + phone + '\'' +
                 '}';
     }
+
     public String getAddress() {
         return address;
     }
