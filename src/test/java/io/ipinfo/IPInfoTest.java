@@ -7,28 +7,43 @@ import io.ipinfo.api.model.IPResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IPInfoTest {
-    private IPInfo ipInfo;
-
     @Test
     public void testGoogleDNS() {
-        ipInfo = IPInfo.builder().build();
+        IPInfo ii = IPInfo.builder().build();
+
         try {
-            IPResponse response = ipInfo.lookupIP("8.8.8.8");
+            IPResponse response = ii.lookupIP("8.8.8.8");
             System.out.println(response.toString());
             assertAll("Country Code",
                     () -> assertEquals(response.getCountryCode(), "US"),
                     () -> assertEquals(response.getCountryName(), "United States"),
                     () -> assertEquals(response.getHostname(), "dns.google"),
                     () -> assertEquals(response.getIp(), "8.8.8.8"),
-                    () -> assertEquals(response.getPrivacy().getProxy(), false),
-                    () -> assertEquals(response.getPrivacy().getHosting(), false),
-                    () -> assertEquals(response.getPrivacy().getVpn(), false),
-                    () -> assertEquals(response.getPrivacy().getTor(), false),
+                    () -> assertFalse(response.getPrivacy().getProxy()),
+                    () -> assertFalse(response.getPrivacy().getHosting()),
+                    () -> assertFalse(response.getPrivacy().getVpn()),
+                    () -> assertFalse(response.getPrivacy().getTor()),
                     () -> assertEquals(response.getDomains().getDomains().size(), 5)
             );
+        } catch (RateLimitedException e) {
+            fail(e);
+        }
+    }
+
+    @Test
+    public void testGetMap() {
+        IPInfo ii = IPInfo.builder().build();
+
+        try {
+            String mapUrl = ii.getMap(Arrays.asList("1.1.1.1", "2.2.2.2", "8.8.8.8"));
+            System.out.println(mapUrl);
         } catch (RateLimitedException e) {
             fail(e);
         }

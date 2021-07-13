@@ -36,7 +36,9 @@ public abstract class BaseRequest<T> {
         }
 
         // Sanity check
-        if (response == null) return null;
+        if (response == null) {
+            return null;
+        }
 
         if (response.code() == 429) {
             throw new RateLimitedException();
