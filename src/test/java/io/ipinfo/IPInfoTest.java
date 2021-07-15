@@ -25,6 +25,7 @@ public class IPInfoTest {
                     () -> assertEquals(response.getCountryCode(), "US"),
                     () -> assertEquals(response.getCountryName(), "United States"),
                     () -> assertEquals(response.getHostname(), "dns.google"),
+                    () -> assertEquals(response.getTimezone(), "America/Los_Angeles"),
                     () -> assertEquals(response.getIp(), "8.8.8.8"),
                     () -> assertFalse(response.getPrivacy().getProxy()),
                     () -> assertFalse(response.getPrivacy().getHosting()),
