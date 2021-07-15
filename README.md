@@ -13,7 +13,7 @@ Check all the data we have for your IP address [here](https://ipinfo.io/what-is-
 
 ### Getting Started
 
-You'll need an IPinfo API access token, which you can get by singing up for a free account at [https://ipinfo.io/signup](https://ipinfo.io/signup). 
+You'll need an IPinfo API access token, which you can get by singing up for a free account at [https://ipinfo.io/signup](https://ipinfo.io/signup).
 
 The free plan is limited to 50,000 requests per month, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing)
 
@@ -39,7 +39,6 @@ Dependency:
 
 ##### IP Information
 
-
 ````java
 import io.ipinfo.api.IPInfo;
 import io.ipinfo.api.errors.RateLimitedException;
@@ -61,7 +60,6 @@ public class Main {
     }
 }
 ````
-
 
 ##### ASN Information
 
@@ -100,7 +98,6 @@ This library provides a very simple caching system accessible in `SimpleCache`. 
 If you prefer a different caching methodology, you may use the `Cache` interface and implement your own caching system around your own infrastructure.
 
 The default cache length is 1 day, this can be changed by calling the SimpleCache constructor yourself.
-
 
 ```java
 import io.ipinfo.api.IPInfo;
@@ -193,10 +190,9 @@ public class Main {
 - This library is thread safe. Feel free to call the different endpoints from different threads.
 - This library uses square's http client. Please refer to their documentation to get information on more functionality you can use.
 
-
 ### Other Libraries
 
-There are official [IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API. 
+There are official [IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API.
 
 ### About IPinfo
 
