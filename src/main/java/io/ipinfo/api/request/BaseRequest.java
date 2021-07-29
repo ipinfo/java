@@ -10,7 +10,6 @@ import okhttp3.Response;
 
 public abstract class BaseRequest<T> {
     protected final static Gson gson = new Gson();
-
     private final OkHttpClient client;
     private final String token;
 

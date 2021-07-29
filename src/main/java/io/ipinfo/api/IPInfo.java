@@ -1,6 +1,8 @@
 package io.ipinfo.api;
 
+import com.google.common.net.InetAddresses;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import io.ipinfo.api.cache.Cache;
 import io.ipinfo.api.context.Context;
 import io.ipinfo.api.errors.RateLimitedException;
@@ -12,12 +14,16 @@ import io.ipinfo.api.request.IPRequest;
 import io.ipinfo.api.request.MapRequest;
 import okhttp3.*;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 
 public class IPInfo {
     private static final int batchMaxSize = 1000;
@@ -188,8 +194,8 @@ public class IPInfo {
             postUrl = "https://ipinfo.io/batch";
         }
 
-        // TODO need to use timeoutPerBatch somehow; it must be on the client
-        // rather than on the request.
+        // prepare latch & common request.
+        // each request, when complete, will countdown the latch.
         CountDownLatch latch = new CountDownLatch((int)Math.ceil(lookupUrls.size()/1000.0));
         Request.Builder reqCommon = new Request.Builder()
                 .url(postUrl)
@@ -209,19 +215,43 @@ public class IPInfo {
             String urlListJson = gson.toJson(urlsChunk);
             RequestBody requestBody = RequestBody.create(null, urlListJson);
             Request req = reqCommon.post(requestBody).build();
-            client.newCall(req).enqueue(new Callback() {
+            OkHttpClient chunkClient = client.newBuilder()
+                    .connectTimeout(timeoutPerBatch, TimeUnit.SECONDS)
+                    .readTimeout(timeoutPerBatch, TimeUnit.SECONDS)
+                    .build();
+            chunkClient.newCall(req).enqueue(new Callback() {
                 @Override
+                @ParametersAreNonnullByDefault
                 public void onFailure(Call call, IOException e) {
                     latch.countDown();
                 }
 
                 @Override
+                @ParametersAreNonnullByDefault
                 public void onResponse(Call call, Response response) throws IOException {
-                    // TODO
-                    // - convert resp json into generic hashmap.
-                    // - for each url, convert obj into one of ASNResponse, IPResponse or Object.
-                    ConcurrentHashMap<String, Object> localResult
-                            = new ConcurrentHashMap<>(urlsChunk.size());
+                    if (response.body() == null || response.code() == 429) {
+                        return;
+                    }
+
+                    Type respType = new TypeToken<HashMap<String, Object>>() {}.getType();
+                    HashMap<String, Object> localResult
+                            = gson.fromJson(response.body().string(), respType);
+                    localResult.forEach(new BiConsumer<String, Object>() {
+                        @Override
+                        public void accept(String k, Object v) {
+                            if (k.startsWith("AS")) {
+                                String vStr = gson.toJson(k);
+                                ASNResponse vCasted = gson.fromJson(vStr, ASNResponse.class);
+                                result.put(k, vCasted);
+                            } else if (InetAddresses.isInetAddress(k)) {
+                                String vStr = gson.toJson(k);
+                                IPResponse vCasted = gson.fromJson(vStr, IPResponse.class);
+                                result.put(k, vCasted);
+                            } else {
+                                result.put(k, v);
+                            }
+                        }
+                    });
 
                     latch.countDown();
                 }
