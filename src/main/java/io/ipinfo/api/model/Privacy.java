@@ -6,21 +6,16 @@ public class Privacy {
     private final boolean tor;
     private final boolean hosting;
 
-    public Privacy(boolean vpn, boolean proxy, boolean tor, boolean hosting) {
+    public Privacy(
+            boolean vpn,
+            boolean proxy,
+            boolean tor,
+            boolean hosting
+    ) {
         this.vpn = vpn;
         this.proxy = proxy;
         this.tor = tor;
         this.hosting = hosting;
-    }
-
-    @Override
-    public String toString() {
-        return "Privacy{" +
-                "vpn=" + vpn +
-                ", proxy=" + proxy +
-                ", tor=" + tor +
-                ", hosting=" + hosting +
-                '}';
     }
 
     public boolean getVpn() {
@@ -37,5 +32,15 @@ public class Privacy {
 
     public boolean getHosting() {
         return hosting;
+    }
+
+    @Override
+    public String toString() {
+        return "Privacy{" +
+                "vpn=" + vpn +
+                ", proxy=" + proxy +
+                ", tor=" + tor +
+                ", hosting=" + hosting +
+                '}';
     }
 }

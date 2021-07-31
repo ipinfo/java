@@ -240,12 +240,14 @@ public class IPInfo {
                         @Override
                         public void accept(String k, Object v) {
                             if (k.startsWith("AS")) {
-                                String vStr = gson.toJson(k);
+                                String vStr = gson.toJson(v);
                                 ASNResponse vCasted = gson.fromJson(vStr, ASNResponse.class);
+                                vCasted.setContext(context);
                                 result.put(k, vCasted);
                             } else if (InetAddresses.isInetAddress(k)) {
-                                String vStr = gson.toJson(k);
+                                String vStr = gson.toJson(v);
                                 IPResponse vCasted = gson.fromJson(vStr, IPResponse.class);
+                                vCasted.setContext(context);
                                 result.put(k, vCasted);
                             } else {
                                 result.put(k, v);

@@ -4,7 +4,10 @@ public class MapResponse {
     private final String reportUrl;
     private final String status;
 
-    public MapResponse(String reportUrl, String status) {
+    public MapResponse(
+            String reportUrl,
+            String status
+    ) {
         this.reportUrl = reportUrl;
         this.status = status;
     }
@@ -17,8 +20,9 @@ public class MapResponse {
         return status;
     }
 
+    @Override
     public String toString() {
-        return "IPResponse{" +
+        return "MapResponse{" +
                 "reportUrl='" + reportUrl + '\'' +
                 ", status=" + status +
                 '}';

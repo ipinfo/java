@@ -6,7 +6,11 @@ public class Carrier {
     private final String mcc;
     private final String mnc;
 
-    public Carrier(String name, String mcc, String mnc) {
+    public Carrier(
+            String name,
+            String mcc,
+            String mnc
+    ) {
         this.name = name;
         this.mcc = mcc;
         this.mnc = mnc;
