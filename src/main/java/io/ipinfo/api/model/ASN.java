@@ -8,7 +8,13 @@ public class ASN {
     private final String route;
     private final String type;
 
-    public ASN(String asn, String name, String domain, String route, String type) {
+    public ASN(
+            String asn,
+            String name,
+            String domain,
+            String route,
+            String type
+    ) {
         this.asn = asn;
         this.name = name;
         this.domain = domain;

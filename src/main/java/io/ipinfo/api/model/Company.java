@@ -6,19 +6,14 @@ public class Company {
     private final String domain;
     private final String type;
 
-    public Company(String name, String domain, String type) {
+    public Company(
+            String name,
+            String domain,
+            String type
+    ) {
         this.name = name;
         this.domain = domain;
         this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "name='" + name + '\'' +
-                ", domain='" + domain + '\'' +
-                ", type='" + type + '\'' +
-                '}';
     }
 
     public String getName() {
@@ -31,5 +26,14 @@ public class Company {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                ", domain='" + domain + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

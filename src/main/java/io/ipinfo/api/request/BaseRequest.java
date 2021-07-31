@@ -10,7 +10,6 @@ import okhttp3.Response;
 
 public abstract class BaseRequest<T> {
     protected final static Gson gson = new Gson();
-
     private final OkHttpClient client;
     private final String token;
 
@@ -24,7 +23,7 @@ public abstract class BaseRequest<T> {
     public Response handleRequest(Request.Builder request) throws RateLimitedException {
         request
                 .addHeader("Authorization", Credentials.basic(token, ""))
-                .addHeader("user-agent", "IPinfoClient/Java/1.0")
+                .addHeader("user-agent", "IPinfoClient/Java/2.0")
                 .addHeader("Content-Type", "application/json");
 
         Response response;
@@ -36,7 +35,9 @@ public abstract class BaseRequest<T> {
         }
 
         // Sanity check
-        if (response == null) return null;
+        if (response == null) {
+            return null;
+        }
 
         if (response.code() == 429) {
             throw new RateLimitedException();
