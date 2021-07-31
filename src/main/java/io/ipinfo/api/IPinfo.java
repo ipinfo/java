@@ -138,6 +138,62 @@ public class IPinfo {
         return this.getBatchGeneric(urls, opts);
     }
 
+    /**
+     * Get the result of a list of IPs in bulk.
+     *
+     * @param ips the list of IPs.
+     * @return the result where each IP is the key and the value is the data for that IP.
+     * @throws RateLimitedException an exception when your API key has been rate limited.
+     */
+    public ConcurrentHashMap<String, IPResponse> getBatchIps(
+            List<String> ips
+    ) throws RateLimitedException {
+        return new ConcurrentHashMap(this.getBatchGeneric(ips, defaultBatchReqOpts));
+    }
+
+    /**
+     * Get the result of a list of IPs in bulk.
+     *
+     * @param ips the list of IPs.
+     * @param opts options to modify the behavior of the batch operation.
+     * @return the result where each IP is the key and the value is the data for that IP.
+     * @throws RateLimitedException an exception when your API key has been rate limited.
+     */
+    public ConcurrentHashMap<String, IPResponse> getBatchIps(
+            List<String> ips,
+            BatchReqOpts opts
+    ) throws RateLimitedException {
+        return new ConcurrentHashMap(this.getBatchGeneric(ips, opts));
+    }
+
+    /**
+     * Get the result of a list of ASNs in bulk.
+     *
+     * @param asns the list of ASNs.
+     * @return the result where each ASN is the key and the value is the data for that ASN.
+     * @throws RateLimitedException an exception when your API key has been rate limited.
+     */
+    public ConcurrentHashMap<String, ASNResponse> getBatchAsns(
+            List<String> asns
+    ) throws RateLimitedException {
+        return new ConcurrentHashMap(this.getBatchGeneric(asns, defaultBatchReqOpts));
+    }
+
+    /**
+     * Get the result of a list of ASNs in bulk.
+     *
+     * @param asns the list of ASNs.
+     * @param opts options to modify the behavior of the batch operation.
+     * @return the result where each ASN is the key and the value is the data for that ASN.
+     * @throws RateLimitedException an exception when your API key has been rate limited.
+     */
+    public ConcurrentHashMap<String, ASNResponse> getBatchAsns(
+            List<String> asns,
+            BatchReqOpts opts
+    ) throws RateLimitedException {
+        return new ConcurrentHashMap(this.getBatchGeneric(asns, opts));
+    }
+
     private ConcurrentHashMap<String, Object> getBatchGeneric(
             List<String> urls,
             BatchReqOpts opts
@@ -279,11 +335,7 @@ public class IPinfo {
             }
         }
 
-        // we delay inserting into the cache until now because:
-        // 1. it's likely more cache-line friendly.
-        // 2. doing it while updating `result` inside the request workers would be
-        //    problematic if the cache is external since we take a mutex lock for
-        //    that entire period.
+        // insert any new lookups into the cache:
         if (cache != null) {
             for (String url : lookupUrls) {
                 Object v = result.get(url);
@@ -356,7 +408,7 @@ public class IPinfo {
             private int timeoutPerBatch = 5;
             private int timeoutTotal = 0;
             private boolean filter = false;
-            
+
             /**
              * batchSize is the internal batch size used per API request; the IPinfo
              * API has a maximum batch size, but the batch request functions available
@@ -366,7 +418,7 @@ public class IPinfo {
              *
              * 0 means to use the default batch size which is the max allowed by the
              * IPinfo API.
-             * 
+             *
              * @param batchSize see description.
              * @return the builder.
              */
