@@ -4,6 +4,7 @@ import com.google.common.net.InetAddresses;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.ipinfo.api.cache.Cache;
+import io.ipinfo.api.cache.SimpleCache;
 import io.ipinfo.api.context.Context;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
@@ -15,17 +16,22 @@ import io.ipinfo.api.request.MapRequest;
 import okhttp3.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
-public class IPInfo {
+public class IPinfo {
     private static final int batchMaxSize = 1000;
     private static final int batchReqTimeoutDefault = 5;
     private static final BatchReqOpts defaultBatchReqOpts = new BatchReqOpts.Builder()
@@ -39,7 +45,7 @@ public class IPInfo {
     private final String token;
     private final Cache cache;
 
-    IPInfo(OkHttpClient client, Context context, String token, Cache cache) {
+    IPinfo(OkHttpClient client, Context context, String token, Cache cache) {
         this.client = client;
         this.context = context;
         this.token = token;
@@ -50,15 +56,6 @@ public class IPInfo {
         System.out.println("This library is not meant to be run as a standalone jar.");
 
         System.exit(0);
-    }
-
-    /**
-     * Gets the builder for IPInfo
-     *
-     * @return IPInfoBuilder object
-     */
-    public static IPInfoBuilder builder() {
-        return new IPInfoBuilder();
     }
 
     /**
@@ -299,6 +296,48 @@ public class IPInfo {
         return result;
     }
 
+    public static class Builder {
+        private File countryFile =
+                new File(this.getClass().getClassLoader().getResource("en_US.json").getFile());
+        private OkHttpClient client = new OkHttpClient.Builder().build();
+        private String token = "";
+        private Cache cache = new SimpleCache(Duration.ofDays(1));
+
+        public Builder setClient(OkHttpClient client) {
+            this.client = client;
+            return this;
+        }
+
+        public Builder setToken(String token) {
+            this.token = token;
+            return this;
+        }
+
+        public Builder setCountryFile(File file) {
+            this.countryFile = file;
+            return this;
+        }
+
+        public Builder setCache(Cache cache) {
+            this.cache = cache;
+            return this;
+        }
+
+        public IPinfo build() {
+            Type type = new TypeToken<Map<String, String>>(){}.getType();
+            Gson gson = new Gson();
+            Map<String, String> map;
+
+            try {
+                map = Collections.unmodifiableMap(gson.fromJson(new FileReader(countryFile), type));
+            } catch (Exception e) {
+                map = Collections.unmodifiableMap(new HashMap<>());
+            }
+
+            return new IPinfo(client, new Context(map), token, cache);
+        }
+    }
+
     public static class BatchReqOpts {
         public final int batchSize;
         public final int timeoutPerBatch;
@@ -377,8 +416,8 @@ public class IPInfo {
                 return this;
             }
 
-            public IPInfo.BatchReqOpts build() {
-                return new IPInfo.BatchReqOpts(batchSize, timeoutPerBatch, timeoutTotal, filter);
+            public IPinfo.BatchReqOpts build() {
+                return new IPinfo.BatchReqOpts(batchSize, timeoutPerBatch, timeoutTotal, filter);
             }
         }
     }

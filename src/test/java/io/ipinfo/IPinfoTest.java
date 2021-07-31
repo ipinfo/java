@@ -1,6 +1,6 @@
 package io.ipinfo;
 
-import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.ErrorResponseException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
@@ -16,10 +16,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class IPInfoTest {
+public class IPinfoTest {
     @Test
     public void testGoogleDNS() {
-        IPInfo ii = IPInfo.builder()
+        IPinfo ii = new IPinfo.Builder()
                 .setToken(System.getenv("IPINFO_TOKEN"))
                 .build();
 
@@ -44,13 +44,12 @@ public class IPInfoTest {
 
     @Test
     public void testGetMap() {
-        IPInfo ii = IPInfo.builder()
+        IPinfo ii = new IPinfo.Builder()
                 .setToken(System.getenv("IPINFO_TOKEN"))
                 .build();
 
         try {
             String mapUrl = ii.getMap(Arrays.asList("1.1.1.1", "2.2.2.2", "8.8.8.8"));
-            System.out.println(mapUrl);
         } catch (RateLimitedException e) {
             fail(e);
         }
@@ -58,7 +57,7 @@ public class IPInfoTest {
 
     @Test
     public void testGetBatch() {
-        IPInfo ii = IPInfo.builder()
+        IPinfo ii = new IPinfo.Builder()
                 .setToken(System.getenv("IPINFO_TOKEN"))
                 .build();
 

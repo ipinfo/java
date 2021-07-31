@@ -4,6 +4,7 @@
 [![Travis](https://travis-ci.com/ipinfo/java.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java)
 
 This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
+
  - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude and longitude)
  - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting or company)
  - [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
@@ -20,6 +21,7 @@ The free plan is limited to 50,000 requests per month, and doesn't include some 
 #### Installation
 
 ##### Maven
+
 Add these values to your pom.xml file:
 
 Dependency:
@@ -29,7 +31,7 @@ Dependency:
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-api</artifactId>
-        <version>1.0</version>
+        <version>2.0</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
@@ -40,14 +42,15 @@ Dependency:
 ##### IP Information
 
 ````java
-import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
 
 public class Main {
-
     public static void main(String... args) {
-        IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").build();
+        IPinfo ipInfo = new IPinfo.Builder()
+                .setToken("YOUR TOKEN")
+                .build();
 
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
@@ -64,14 +67,15 @@ public class Main {
 ##### ASN Information
 
 ````java
-import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
 
 public class Main {
-
     public static void main(String... args) {
-        IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").build();
+        IPinfo ipInfo = new IPinfo.Builder()
+                .setToken("YOUR TOKEN")
+                .build();
 
         try {
             ASNResponse response = ipInfo.lookupASN("AS7922");
@@ -87,28 +91,36 @@ public class Main {
 
 #### Errors
 
-- ErrorResponseException: A runtime exception accessible through the ExecutionException of a future. This exception signals that something went wrong when mapping the API response to the wrapper. You probably can't recover from this exception.
-
-- RateLimitedException An exception signalling that you've been rate limited.
+- `ErrorResponseException`: A runtime exception accessible through the
+  `ExecutionException` of a future. This exception signals that something went
+  wrong when mapping the API response to the wrapper. You probably can't
+  recover from this exception.
+- `RateLimitedException` An exception signalling that you've been rate limited.
 
 #### Caching
 
-This library provides a very simple caching system accessible in `SimpleCache`. Simple cache is an in memory caching system that resets every time you restart your code.
+This library provides a very simple caching system accessible in `SimpleCache`.
+Simple cache is an in memory caching system that resets every time you restart
+your code.
 
-If you prefer a different caching methodology, you may use the `Cache` interface and implement your own caching system around your own infrastructure.
+If you prefer a different caching methodology, you may use the `Cache`
+interface and implement your own caching system around your own infrastructure.
 
-The default cache length is 1 day, this can be changed by calling the SimpleCache constructor yourself.
+The default cache length is 1 day, this can be changed by calling the
+SimpleCache constructor yourself.
 
 ```java
-import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
 
 public class Main {
-
     public static void main(String... args) {
         // 5 Day Cache
-        IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").setCache(new SimpleCache(Duration.ofDays(5))).build();
+        IPinfo ipInfo = new IPinfo.Builder()
+                .setToken("YOUR TOKEN")
+                .setCache(new SimpleCache(Duration.ofDays(5)))
+                .build();
 
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
@@ -124,19 +136,24 @@ public class Main {
 
 #### Country Name Lookup
 
-This library provides a system to lookup country names through ISO2 country codes.
+This library provides a system to lookup country names through ISO2 country
+codes.
 
-By default, this translation exists for English (United States). If you wish to provide a different language mapping, just use the following system in the builder:
+By default, this translation exists for English (United States). If you wish to
+provide a different language mapping, just use the following system in the
+builder:
 
 ```java
-import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
 
 public class Main {
-
     public static void main(String... args) {
-        IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").setCountryFile(new File("path/to/file.json")).build();
+        IPinfo ipInfo = new IPinfo.Builder()
+                .setToken("YOUR TOKEN")
+                .setCountryFile(new File("path/to/file.json"))
+                .build();
 
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
@@ -162,14 +179,16 @@ More language files can be found [here](https://country.io/data)
 This library provides an easy way to get the latitude and longitude of an IP Address:
 
 ```java
-import io.ipinfo.api.IPInfo;
+import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
 
 public class Main {
-
     public static void main(String... args) {
-        IPInfo ipInfo = IPInfo.builder().setToken("YOUR TOKEN").setCountryFile(new File("path/to/file.json")).build();
+        IPinfo ipInfo = new IPinfo.Builder()
+                .setToken("YOUR TOKEN")
+                .setCountryFile(new File("path/to/file.json"))
+                .build();
 
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
@@ -187,8 +206,10 @@ public class Main {
 
 #### Extra Information
 
-- This library is thread safe. Feel free to call the different endpoints from different threads.
-- This library uses square's http client. Please refer to their documentation to get information on more functionality you can use.
+- This library is thread safe. Feel free to call the different endpoints from
+  different threads.
+- This library uses square's http client. Please refer to their documentation
+  to get information on more functionality you can use.
 
 ### Other Libraries
 
