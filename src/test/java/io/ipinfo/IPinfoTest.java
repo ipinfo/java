@@ -228,7 +228,7 @@ public class IPinfoTest {
                     () -> assertEquals(res2.getRegistry(), "arin"),
                     () -> assertEquals(res2.getDomain(), "mail.mil"),
                     () -> assertEquals(res2.getNumIps(), new Integer(66048)),
-                    () -> assertEquals(res2.getType(), "business")
+                    () -> assertEquals(res2.getType(), "isp")
             );
         } catch (RateLimitedException e) {
             fail(e);
