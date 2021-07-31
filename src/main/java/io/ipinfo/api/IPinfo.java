@@ -396,7 +396,12 @@ public class IPinfo {
         public final int timeoutTotal;
         public final boolean filter;
 
-        public BatchReqOpts(int batchSize, int timeoutPerBatch, int timeoutTotal, boolean filter) {
+        public BatchReqOpts(
+                int batchSize,
+                int timeoutPerBatch,
+                int timeoutTotal,
+                boolean filter
+        ) {
             this.batchSize = batchSize;
             this.timeoutPerBatch = timeoutPerBatch;
             this.timeoutTotal = timeoutTotal;
