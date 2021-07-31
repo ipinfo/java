@@ -54,7 +54,6 @@ public class IPinfo {
 
     public static void main(String... args) {
         System.out.println("This library is not meant to be run as a standalone jar.");
-
         System.exit(0);
     }
 
@@ -66,7 +65,7 @@ public class IPinfo {
      * @throws RateLimitedException an exception when your api key has been rate limited.
      */
     public IPResponse lookupIP(String ip) throws RateLimitedException {
-        IPResponse response = cache.getIp(ip);
+        IPResponse response = (IPResponse)cache.get(cacheKey(ip));
         if (response != null) {
             return response;
         }
@@ -74,7 +73,7 @@ public class IPinfo {
         response = new IPRequest(client, token, ip).handle();
         response.setContext(context);
 
-        cache.setIp(ip, response);
+        cache.set(cacheKey(ip), response);
         return response;
     }
 
@@ -86,7 +85,7 @@ public class IPinfo {
      * @throws RateLimitedException an exception when your api key has been rate limited.
      */
     public ASNResponse lookupASN(String asn) throws RateLimitedException {
-        ASNResponse response = cache.getAsn(asn);
+        ASNResponse response = (ASNResponse)cache.get(cacheKey(asn));
         if (response != null) {
             return response;
         }
@@ -94,7 +93,7 @@ public class IPinfo {
         response = new ASNRequest(client, token, asn).handle();
         response.setContext(context);
 
-        cache.setAsn(asn, response);
+        cache.set(cacheKey(asn), response);
         return response;
     }
 
@@ -208,7 +207,7 @@ public class IPinfo {
         if (this.cache != null) {
             lookupUrls = new ArrayList<>(urls.size()/2);
             for (String url : urls) {
-                Object val = cache.get(url);
+                Object val = cache.get(cacheKey(url));
                 if (val != null) {
                     result.put(url, val);
                 } else {
@@ -340,12 +339,22 @@ public class IPinfo {
             for (String url : lookupUrls) {
                 Object v = result.get(url);
                 if (v != null) {
-                    cache.set(url, v);
+                    cache.set(cacheKey(url), v);
                 }
             }
         }
 
         return result;
+    }
+
+    /**
+     * Converts a normal key into a versioned cache key.
+     *
+     * @param k the key to convert into a versioned cache key.
+     * @return the versioned cache key.
+     */
+    public static String cacheKey(String k) {
+        return k+":1";
     }
 
     public static class Builder {
