@@ -1,7 +1,7 @@
 # [<img src="https://ipinfo.io/static/ipinfo-small.svg" alt="IPinfo" width="24"/>](https://ipinfo.io/) IPinfo Java Client Library
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
-[![Travis](https://travis-ci.com/ipinfo/java.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java)
+
 
 This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
 
@@ -17,6 +17,8 @@ Check all the data we have for your IP address [here](https://ipinfo.io/what-is-
 You'll need an IPinfo API access token, which you can get by singing up for a free account at [https://ipinfo.io/signup](https://ipinfo.io/signup).
 
 The free plan is limited to 50,000 requests per month, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing)
+
+[Click here to view the Java SDK's API documentation](https://ipinfo.github.io/java/).
 
 #### Installation
 
