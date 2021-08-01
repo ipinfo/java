@@ -1,0 +1,6 @@
+io.ipinfo.api
+io.ipinfo.api.cache
+io.ipinfo.api.context
+io.ipinfo.api.errors
+io.ipinfo.api.model
+io.ipinfo.api.request
