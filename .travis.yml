@@ -8,7 +8,7 @@ install:
   - mvn -B install -U
 
 after_success:
-#  - util/deploy.sh
+  - util/deploy.sh
   - util/deploy_docs.sh
 
 branches:
