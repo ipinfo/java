@@ -2,7 +2,6 @@
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
 
-
 This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
 
  - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude and longitude)
