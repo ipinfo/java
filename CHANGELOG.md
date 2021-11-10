@@ -1,3 +1,7 @@
+# 2.1.0
+
+- Added `Relay` and `Service` fields to `io.ipinfo.api.model.Privacy`.
+
 # 2.0.0
 
 Breaking changes:

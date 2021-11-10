@@ -35,9 +35,11 @@ public class IPinfoTest {
                     () -> assertEquals(response.getCountryName(), "United States"),
                     () -> assertEquals(response.getTimezone(), "America/Los_Angeles"),
                     () -> assertFalse(response.getPrivacy().getProxy()),
-                    () -> assertFalse(response.getPrivacy().getHosting()),
                     () -> assertFalse(response.getPrivacy().getVpn()),
                     () -> assertFalse(response.getPrivacy().getTor()),
+                    () -> assertFalse(response.getPrivacy().getRelay()),
+                    () -> assertFalse(response.getPrivacy().getHosting()),
+                    () -> assertEquals(response.getPrivacy().getService(), null),
                     () -> assertEquals(response.getDomains().getDomains().size(), 5)
             );
         } catch (RateLimitedException e) {
@@ -101,9 +103,11 @@ public class IPinfoTest {
                     () -> assertEquals(ipResp.getCountryName(), "United States"),
                     () -> assertEquals(ipResp.getTimezone(), "America/Los_Angeles"),
                     () -> assertFalse(ipResp.getPrivacy().getProxy()),
-                    () -> assertFalse(ipResp.getPrivacy().getHosting()),
                     () -> assertFalse(ipResp.getPrivacy().getVpn()),
                     () -> assertFalse(ipResp.getPrivacy().getTor()),
+                    () -> assertFalse(ipResp.getPrivacy().getRelay()),
+                    () -> assertFalse(ipResp.getPrivacy().getHosting()),
+                    () -> assertEquals(ipResp.getPrivacy().getService(), null),
                     () -> assertEquals(ipResp.getDomains().getDomains().size(), 5)
             );
 
@@ -144,9 +148,11 @@ public class IPinfoTest {
                     () -> assertEquals(res1.getCountryName(), "United States"),
                     () -> assertEquals(res1.getTimezone(), "America/New_York"),
                     () -> assertFalse(res1.getPrivacy().getProxy()),
-                    () -> assertTrue(res1.getPrivacy().getHosting()),
                     () -> assertFalse(res1.getPrivacy().getVpn()),
                     () -> assertFalse(res1.getPrivacy().getTor()),
+                    () -> assertFalse(res1.getPrivacy().getRelay()),
+                    () -> assertTrue(res1.getPrivacy().getHosting()),
+                    () -> assertEquals(res1.getPrivacy().getService(), null),
                     () -> assertEquals(res1.getDomains().getDomains().size(), 5)
             );
 
@@ -161,9 +167,11 @@ public class IPinfoTest {
                     () -> assertEquals(res2.getCountryName(), "United States"),
                     () -> assertEquals(res2.getTimezone(), "America/Los_Angeles"),
                     () -> assertFalse(res2.getPrivacy().getProxy()),
-                    () -> assertFalse(res2.getPrivacy().getHosting()),
                     () -> assertFalse(res2.getPrivacy().getVpn()),
                     () -> assertFalse(res2.getPrivacy().getTor()),
+                    () -> assertFalse(res2.getPrivacy().getRelay()),
+                    () -> assertFalse(res2.getPrivacy().getHosting()),
+                    () -> assertEquals(res2.getPrivacy().getService(), null),
                     () -> assertEquals(res2.getDomains().getDomains().size(), 5)
             );
 
@@ -178,9 +186,11 @@ public class IPinfoTest {
                     () -> assertEquals(res3.getCountryName(), "United States"),
                     () -> assertEquals(res3.getTimezone(), "America/New_York"),
                     () -> assertFalse(res3.getPrivacy().getProxy()),
-                    () -> assertFalse(res3.getPrivacy().getHosting()),
                     () -> assertFalse(res3.getPrivacy().getVpn()),
                     () -> assertFalse(res3.getPrivacy().getTor()),
+                    () -> assertFalse(res3.getPrivacy().getRelay()),
+                    () -> assertFalse(res3.getPrivacy().getHosting()),
+                    () -> assertEquals(res3.getPrivacy().getService(), null),
                     () -> assertEquals(res3.getDomains().getDomains().size(), 5)
             );
         } catch (RateLimitedException e) {
@@ -228,7 +238,7 @@ public class IPinfoTest {
                     () -> assertEquals(res2.getRegistry(), "arin"),
                     () -> assertEquals(res2.getDomain(), "mail.mil"),
                     () -> assertEquals(res2.getNumIps(), new Integer(66048)),
-                    () -> assertEquals(res2.getType(), "isp")
+                    () -> assertEquals(res2.getType(), "business")
             );
         } catch (RateLimitedException e) {
             fail(e);

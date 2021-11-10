@@ -4,18 +4,24 @@ public class Privacy {
     private final boolean vpn;
     private final boolean proxy;
     private final boolean tor;
+    private final boolean relay;
     private final boolean hosting;
+    private final String service;
 
     public Privacy(
             boolean vpn,
             boolean proxy,
             boolean tor,
-            boolean hosting
+            boolean relay,
+            boolean hosting,
+            String service
     ) {
         this.vpn = vpn;
         this.proxy = proxy;
         this.tor = tor;
+        this.relay = relay;
         this.hosting = hosting;
+        this.service = service;
     }
 
     public boolean getVpn() {
@@ -30,8 +36,16 @@ public class Privacy {
         return tor;
     }
 
+    public boolean getRelay() {
+        return relay;
+    }
+
     public boolean getHosting() {
         return hosting;
+    }
+
+    public String getService() {
+        return service;
     }
 
     @Override
@@ -40,7 +54,9 @@ public class Privacy {
                 "vpn=" + vpn +
                 ", proxy=" + proxy +
                 ", tor=" + tor +
+                ", relay=" + relay +
                 ", hosting=" + hosting +
+                ", service=" + service +
                 '}';
     }
 }
