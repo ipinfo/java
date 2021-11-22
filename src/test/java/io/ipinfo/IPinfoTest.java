@@ -39,7 +39,7 @@ public class IPinfoTest {
                     () -> assertFalse(response.getPrivacy().getTor()),
                     () -> assertFalse(response.getPrivacy().getRelay()),
                     () -> assertFalse(response.getPrivacy().getHosting()),
-                    () -> assertEquals(response.getPrivacy().getService(), null),
+                    () -> assertEquals(response.getPrivacy().getService(), ""),
                     () -> assertEquals(response.getDomains().getDomains().size(), 5)
             );
         } catch (RateLimitedException e) {
@@ -107,7 +107,7 @@ public class IPinfoTest {
                     () -> assertFalse(ipResp.getPrivacy().getTor()),
                     () -> assertFalse(ipResp.getPrivacy().getRelay()),
                     () -> assertFalse(ipResp.getPrivacy().getHosting()),
-                    () -> assertEquals(ipResp.getPrivacy().getService(), null),
+                    () -> assertEquals(ipResp.getPrivacy().getService(), ""),
                     () -> assertEquals(ipResp.getDomains().getDomains().size(), 5)
             );
 
@@ -152,7 +152,7 @@ public class IPinfoTest {
                     () -> assertFalse(res1.getPrivacy().getTor()),
                     () -> assertFalse(res1.getPrivacy().getRelay()),
                     () -> assertTrue(res1.getPrivacy().getHosting()),
-                    () -> assertEquals(res1.getPrivacy().getService(), null),
+                    () -> assertEquals(res1.getPrivacy().getService(), ""),
                     () -> assertEquals(res1.getDomains().getDomains().size(), 5)
             );
 
@@ -171,7 +171,7 @@ public class IPinfoTest {
                     () -> assertFalse(res2.getPrivacy().getTor()),
                     () -> assertFalse(res2.getPrivacy().getRelay()),
                     () -> assertFalse(res2.getPrivacy().getHosting()),
-                    () -> assertEquals(res2.getPrivacy().getService(), null),
+                    () -> assertEquals(res2.getPrivacy().getService(), ""),
                     () -> assertEquals(res2.getDomains().getDomains().size(), 5)
             );
 
@@ -190,7 +190,7 @@ public class IPinfoTest {
                     () -> assertFalse(res3.getPrivacy().getTor()),
                     () -> assertFalse(res3.getPrivacy().getRelay()),
                     () -> assertFalse(res3.getPrivacy().getHosting()),
-                    () -> assertEquals(res3.getPrivacy().getService(), null),
+                    () -> assertEquals(res3.getPrivacy().getService(), ""),
                     () -> assertEquals(res3.getDomains().getDomains().size(), 5)
             );
         } catch (RateLimitedException e) {
