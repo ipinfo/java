@@ -381,6 +381,11 @@ public class IPinfo {
             return this;
         }
 
+        public Builder setEUCountryFile(File file) {
+            this.euCountryFile = file;
+            return this;
+        }
+
         public Builder setCache(Cache cache) {
             this.cache = cache;
             return this;
