@@ -95,6 +95,10 @@ public class IPResponse {
         return context.getCountryName(getCountryCode());
     }
 
+    public Boolean isEU(){
+        return context.isEU(getCountryCode());
+    }
+
     public String getLocation() {
         return loc;
     }

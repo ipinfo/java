@@ -360,6 +360,8 @@ public class IPinfo {
     public static class Builder {
         private File countryFile =
                 new File(this.getClass().getClassLoader().getResource("en_US.json").getFile());
+        private File euCountryFile =
+                new File(this.getClass().getClassLoader().getResource("eu.json").getFile());
         private OkHttpClient client = new OkHttpClient.Builder().build();
         private String token = "";
         private Cache cache = new SimpleCache(Duration.ofDays(1));
@@ -384,18 +386,22 @@ public class IPinfo {
             return this;
         }
 
-        public IPinfo build() {
+        public <T> IPinfo build() {
             Type type = new TypeToken<Map<String, String>>(){}.getType();
+            Type euCountriesType = new TypeToken<List<String>>(){}.getType();
             Gson gson = new Gson();
             Map<String, String> map;
+            List<String> euList;
 
             try {
                 map = Collections.unmodifiableMap(gson.fromJson(new FileReader(countryFile), type));
+                euList = Collections.unmodifiableList(gson.fromJson(new FileReader(euCountryFile), euCountriesType));
             } catch (Exception e) {
                 map = Collections.unmodifiableMap(new HashMap<>());
+                euList = Collections.unmodifiableList(new ArrayList<>());
             }
 
-            return new IPinfo(client, new Context(map), token, cache);
+            return new IPinfo(client, new Context(map, euList), token, cache);
         }
     }
 
