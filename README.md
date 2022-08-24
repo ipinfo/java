@@ -175,6 +175,40 @@ This file must follow the same layout as seen [here](https://github.com/ipinfo/j
 
 More language files can be found [here](https://country.io/data)
 
+#### EU Country Lookup
+
+This library provides a system to lookup if a country is a member of the European Union (EU) through 
+ISO2 country codes.
+
+By default, [here](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) is the file containing all the EU members. 
+If you wish to provide a different file, just use the following system in the builder:
+
+```java
+import io.ipinfo.api.IPinfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
+
+public class Main {
+    public static void main(String... args) {
+        IPinfo ipInfo = new IPinfo.Builder()
+                .setToken("YOUR TOKEN")
+                .setEUCountryFile(new File("path/to/file.json"))
+                .build();
+
+        try {
+            IPResponse response = ipInfo.lookupIP("8.8.8.8");
+
+            // Print out whether the country is a member of the EU
+            System.out.println(response.isEU());
+        } catch (RateLimitedException ex) {
+            // Handle rate limits here.
+        }
+    }
+}
+```
+
+This file must follow the same layout as seen [here](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json)
+
 #### Location Information
 
 This library provides an easy way to get the latitude and longitude of an IP Address:

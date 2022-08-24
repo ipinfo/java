@@ -33,6 +33,7 @@ public class IPinfoTest {
                     () -> assertEquals(response.getRegion(), "California"),
                     () -> assertEquals(response.getCountryCode(), "US"),
                     () -> assertEquals(response.getCountryName(), "United States"),
+                    () -> assertFalse(response.isEU()),
                     () -> assertEquals(response.getTimezone(), "America/Los_Angeles"),
                     () -> assertFalse(response.getPrivacy().getProxy()),
                     () -> assertFalse(response.getPrivacy().getVpn()),
