@@ -198,7 +198,7 @@ public class Main {
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
 
-            // Print out the true if the country is a member of EU
+            // Print out whether the country is a member of the EU
             System.out.println(response.isEU());
         } catch (RateLimitedException ex) {
             // Handle rate limits here.
