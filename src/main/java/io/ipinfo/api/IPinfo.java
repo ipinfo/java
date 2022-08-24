@@ -391,7 +391,7 @@ public class IPinfo {
             return this;
         }
 
-        public <T> IPinfo build() {
+        public IPinfo build() {
             Type type = new TypeToken<Map<String, String>>(){}.getType();
             Type euCountriesType = new TypeToken<List<String>>(){}.getType();
             Gson gson = new Gson();

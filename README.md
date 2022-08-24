@@ -177,7 +177,7 @@ More language files can be found [here](https://country.io/data)
 
 #### EU Country Lookup
 
-This library provides a system to lookup if a country is member of EU through 
+This library provides a system to lookup if a country is a member of the European Union (EU) through 
 ISO2 country codes.
 
 By default, [here](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) is the file containing all the EU members. 
@@ -198,10 +198,7 @@ public class Main {
         try {
             IPResponse response = ipInfo.lookupIP("8.8.8.8");
 
-            // Print out the country code
-            System.out.println(response.getCountryCode());
-
-            // Print out the country name
+            // Print out the true if the country is a member of EU
             System.out.println(response.isEU());
         } catch (RateLimitedException ex) {
             // Handle rate limits here.

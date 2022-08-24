@@ -95,7 +95,7 @@ public class IPResponse {
         return context.getCountryName(getCountryCode());
     }
 
-    public Boolean isEU(){
+    public Boolean isEU() {
         return context.isEU(getCountryCode());
     }
 
