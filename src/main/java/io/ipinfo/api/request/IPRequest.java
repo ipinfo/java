@@ -6,6 +6,9 @@ import io.ipinfo.api.model.IPResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.net.Inet4Address;
 
 public class IPRequest extends BaseRequest<IPResponse> {
     private final static String URL_FORMAT = "https://ipinfo.io/%s";
@@ -18,6 +21,17 @@ public class IPRequest extends BaseRequest<IPResponse> {
 
     @Override
     public IPResponse handle() throws RateLimitedException {
+        String bogonType = handleBogon(ip);
+        if (bogonType != null) {
+            String bogonResponse = "{ip='" + ip + "', bogon='true', bogonType='" + bogonType + "'}";
+            try {
+                return gson.fromJson(bogonResponse.toString(), IPResponse.class);
+            } catch (Exception ex) {
+                System.out.println("inException");
+                throw new ErrorResponseException(ex);
+            }
+        }
+
         String url = String.format(URL_FORMAT, ip);
         Request.Builder request = new Request.Builder().url(url).get();
 
@@ -31,6 +45,182 @@ public class IPRequest extends BaseRequest<IPResponse> {
             } catch (Exception ex) {
                 throw new ErrorResponseException(ex);
             }
+        }
+    }
+
+    static String handleBogon(String ip)  {
+        String[] bogonIPv4List = {
+            "0.0.0.0/8",
+            "10.0.0.0/8",
+            "100.64.0.0/10",
+            "127.0.0.0/8",
+            "169.254.0.0/16",
+            "172.16.0.0/12",
+            "192.0.0.0/24",
+            "192.0.2.0/24",
+            "192.168.0.0/16",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "224.0.0.0/4",
+            "240.0.0.0/4",
+            "255.255.255.255/32"
+        };
+
+        String[] bogonIPv6List = {
+            "::/128",
+            "::1/128",
+            "::ffff:0:0/96",
+            "::/96",
+            "100::/64",
+            "2001:10::/28",
+            "2001:db8::/32",
+            "fc00::/7",
+            "fe80::/10",
+            "fec0::/10",
+            "ff00::/8"
+        };
+
+        String[] bogon6to4List = {
+            "2002::/24",
+            "2002:a00::/24",
+            "2002:7f00::/24",
+            "2002:a9fe::/32",
+            "2002:ac10::/28",
+            "2002:c000::/40",
+            "2002:c000:200::/40",
+            "2002:c0a8::/32",
+            "2002:c612::/31",
+            "2002:c633:6400::/40",
+            "2002:cb00:7100::/40",
+            "2002:e000::/20",
+            "2002:f000::/20",
+            "2002:ffff:ffff::/48"
+        };
+
+        String[] bogonTeredoList = {
+            "2001::/40",
+            "2001:0:a00::/40",
+            "2001:0:7f00::/40",
+            "2001:0:a9fe::/48",
+            "2001:0:ac10::/44",
+            "2001:0:c000::/56",
+            "2001:0:c000:200::/56",
+            "2001:0:c0a8::/48",
+            "2001:0:c612::/47",
+            "2001:0:c633:6400::/56",
+            "2001:0:cb00:7100::/56",
+            "2001:0:e000::/36",
+            "2001:0:f000::/36",
+            "2001:0:ffff:ffff::/64"
+        };
+
+        InetAddress address = parseAddress(ip);
+        if (address instanceof Inet4Address) {
+            for (int i = 0; i < bogonIPv4List.length; i++) {
+                IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogonIPv4List[i]);
+                if (ipAddressMatcher.matches(ip)) {
+                    return "IPv4";
+                }
+            }
+        }
+
+        for (int i = 0; i < bogonIPv6List.length; i++) {
+            IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogonIPv6List[i]);
+            if (ipAddressMatcher.matches(ip)) {
+                return "IPv6";
+            }
+        }
+
+        for (int i = 0; i < bogon6to4List.length; i++) {
+            IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogon6to4List[i]);
+            if (ipAddressMatcher.matches(ip)) {
+                return "6to4";
+            }
+        }
+
+        for (int i = 0; i < bogonTeredoList.length; i++) {
+            IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogonTeredoList[i]);
+            if (ipAddressMatcher.matches(ip)) {
+                return "Teredo";
+            }
+        }
+
+        return null;
+    }
+
+    static InetAddress parseAddress(String address) {
+        try {
+            return InetAddress.getByName(address);
+        }
+        catch (UnknownHostException e) {
+            throw new IllegalArgumentException("Failed to parse address: " + address, e);
+        }
+    }
+
+    /*
+    * Copyright 2002-2019 the original author or authors.
+    *
+    * Licensed under the Apache License, Version 2.0 (the "License");
+    * you may not use this file except in compliance with the License.
+    * You may obtain a copy of the License at
+    *
+    *      https://www.apache.org/licenses/LICENSE-2.0
+    *
+    * Unless required by applicable law or agreed to in writing, software
+    * distributed under the License is distributed on an "AS IS" BASIS,
+    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    * See the License for the specific language governing permissions and
+    * limitations under the License.
+    */
+    public static class IpAddressMatcher {
+        private final int nMaskBits;
+        private final InetAddress requiredAddress;
+
+        public IpAddressMatcher(String ipAddress) {
+
+            if (ipAddress.indexOf('/') > 0) {
+                String[] addressAndMask = ipAddress.split("/");
+                ipAddress = addressAndMask[0];
+                nMaskBits = Integer.parseInt(addressAndMask[1]);
+            }
+            else {
+                nMaskBits = -1;
+            }
+            requiredAddress = parseAddress(ipAddress);
+            assert  (requiredAddress.getAddress().length * 8 >= nMaskBits) :
+                    String.format("IP address %s is too short for bitmask of length %d",
+                            ipAddress, nMaskBits);
+        }
+
+        public boolean matches(String address) {
+            InetAddress remoteAddress = parseAddress(address);
+
+            if (!requiredAddress.getClass().equals(remoteAddress.getClass())) {
+                return false;
+            }
+
+            if (nMaskBits < 0) {
+                return remoteAddress.equals(requiredAddress);
+            }
+
+            byte[] remAddr = remoteAddress.getAddress();
+            byte[] reqAddr = requiredAddress.getAddress();
+
+            int nMaskFullBytes = nMaskBits / 8;
+            byte finalByte = (byte) (0xFF00 >> (nMaskBits & 0x07));
+
+            for (int i = 0; i < nMaskFullBytes; i++) {
+                if (remAddr[i] != reqAddr[i]) {
+                    return false;
+                }
+            }
+
+            if (finalByte != 0) {
+                return (remAddr[nMaskFullBytes] & finalByte) == (reqAddr[nMaskFullBytes] & finalByte);
+            }
+
+            return true;
         }
     }
 }
