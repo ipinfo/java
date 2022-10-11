@@ -6,7 +6,6 @@ public class IPResponse {
     private final String ip;
     private final String hostname;
     private final boolean bogon;
-    private final String bogonType;
     private final boolean anycast;
     private final String city;
     private final String region;
@@ -27,7 +26,6 @@ public class IPResponse {
             String ip,
             String hostname,
             boolean bogon,
-            String bogonType,
             boolean anycast,
             String city,
             String region,
@@ -46,7 +44,6 @@ public class IPResponse {
         this.ip = ip;
         this.hostname = hostname;
         this.bogon = bogon;
-        this.bogonType = bogonType;
         this.anycast = anycast;
         this.city = city;
         this.region = region;
@@ -61,7 +58,13 @@ public class IPResponse {
         this.privacy = privacy;
         this.abuse = abuse;
         this.domains = domains;
+    }
 
+    public IPResponse(
+        String ip,
+        boolean bogon
+    ) {
+        this(ip, null, bogon, false,  null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -83,10 +86,6 @@ public class IPResponse {
 
     public boolean getBogon() {
         return bogon;
-    }
-
-    public String getBogonType() {
-        return bogonType;
     }
 
     public boolean getAnycast() {
@@ -175,7 +174,6 @@ public class IPResponse {
                 "IPResponse{" +
                     "ip='" + ip + '\'' +
                     ", bogon='" + bogon + '\'' +
-                    ", bogonType='" + bogonType + '\'' +
                 "}"
                 :
                 "IPResponse{" +

@@ -8,7 +8,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.net.Inet4Address;
 
 public class IPRequest extends BaseRequest<IPResponse> {
     private final static String URL_FORMAT = "https://ipinfo.io/%s";
@@ -21,11 +20,9 @@ public class IPRequest extends BaseRequest<IPResponse> {
 
     @Override
     public IPResponse handle() throws RateLimitedException {
-        String bogonType = handleBogon(ip);
-        if (bogonType != null) {
-            String bogonResponse = "{ip='" + ip + "', bogon='true', bogonType='" + bogonType + "'}";
+        if (isBogon(ip)) {
             try {
-                return gson.fromJson(bogonResponse.toString(), IPResponse.class);
+                return new IPResponse(ip, true);
             } catch (Exception ex) {
                 System.out.println("inException");
                 throw new ErrorResponseException(ex);
@@ -48,105 +45,75 @@ public class IPRequest extends BaseRequest<IPResponse> {
         }
     }
 
-    static String handleBogon(String ip)  {
-        String[] bogonIPv4List = {
-            "0.0.0.0/8",
-            "10.0.0.0/8",
-            "100.64.0.0/10",
-            "127.0.0.0/8",
-            "169.254.0.0/16",
-            "172.16.0.0/12",
-            "192.0.0.0/24",
-            "192.0.2.0/24",
-            "192.168.0.0/16",
-            "198.18.0.0/15",
-            "198.51.100.0/24",
-            "203.0.113.0/24",
-            "224.0.0.0/4",
-            "240.0.0.0/4",
-            "255.255.255.255/32"
-        };
+    static IpAddressMatcher[] IpAddressMatcherList = {
+        // IPv4
+        new IpAddressMatcher("0.0.0.0/8"),
+        new IpAddressMatcher("10.0.0.0/8"),
+        new IpAddressMatcher("100.64.0.0/10"),
+        new IpAddressMatcher("127.0.0.0/8"),
+        new IpAddressMatcher("169.254.0.0/16"),
+        new IpAddressMatcher("172.16.0.0/12"),
+        new IpAddressMatcher("192.0.0.0/24"),
+        new IpAddressMatcher("192.0.2.0/24"),
+        new IpAddressMatcher("192.168.0.0/16"),
+        new IpAddressMatcher("198.18.0.0/15"),
+        new IpAddressMatcher("198.51.100.0/24"),
+        new IpAddressMatcher("203.0.113.0/24"),
+        new IpAddressMatcher("224.0.0.0/4"),
+        new IpAddressMatcher("240.0.0.0/4"),
+        new IpAddressMatcher("255.255.255.255/32"),
+        // IPv6
+        new IpAddressMatcher("::/128"),
+        new IpAddressMatcher("::1/128"),
+        new IpAddressMatcher("::ffff:0:0/96"),
+        new IpAddressMatcher("::/96"),
+        new IpAddressMatcher("100::/64"),
+        new IpAddressMatcher("2001:10::/28"),
+        new IpAddressMatcher("2001:db8::/32"),
+        new IpAddressMatcher("fc00::/7"),
+        new IpAddressMatcher("fe80::/10"),
+        new IpAddressMatcher("fec0::/10"),
+        new IpAddressMatcher("ff00::/8"),
+        // 6to4
+        new IpAddressMatcher("2002::/24"),
+        new IpAddressMatcher("2002:a00::/24"),
+        new IpAddressMatcher("2002:7f00::/24"),
+        new IpAddressMatcher("2002:a9fe::/32"),
+        new IpAddressMatcher("2002:ac10::/28"),
+        new IpAddressMatcher("2002:c000::/40"),
+        new IpAddressMatcher("2002:c000:200::/40"),
+        new IpAddressMatcher("2002:c0a8::/32"),
+        new IpAddressMatcher("2002:c612::/31"),
+        new IpAddressMatcher("2002:c633:6400::/40"),
+        new IpAddressMatcher("2002:cb00:7100::/40"),
+        new IpAddressMatcher("2002:e000::/20"),
+        new IpAddressMatcher("2002:f000::/20"),
+        new IpAddressMatcher("2002:ffff:ffff::/48"),
+        // Teredo
+        new IpAddressMatcher("2001::/40"),
+        new IpAddressMatcher("2001:0:a00::/40"),
+        new IpAddressMatcher("2001:0:7f00::/40"),
+        new IpAddressMatcher("2001:0:a9fe::/48"),
+        new IpAddressMatcher("2001:0:ac10::/44"),
+        new IpAddressMatcher("2001:0:c000::/56"),
+        new IpAddressMatcher("2001:0:c000:200::/56"),
+        new IpAddressMatcher("2001:0:c0a8::/48"),
+        new IpAddressMatcher("2001:0:c612::/47"),
+        new IpAddressMatcher("2001:0:c633:6400::/56"),
+        new IpAddressMatcher("2001:0:cb00:7100::/56"),
+        new IpAddressMatcher("2001:0:e000::/36"),
+        new IpAddressMatcher("2001:0:f000::/36"),
+        new IpAddressMatcher("2001:0:ffff:ffff::/64")
+    };
 
-        String[] bogonIPv6List = {
-            "::/128",
-            "::1/128",
-            "::ffff:0:0/96",
-            "::/96",
-            "100::/64",
-            "2001:10::/28",
-            "2001:db8::/32",
-            "fc00::/7",
-            "fe80::/10",
-            "fec0::/10",
-            "ff00::/8"
-        };
-
-        String[] bogon6to4List = {
-            "2002::/24",
-            "2002:a00::/24",
-            "2002:7f00::/24",
-            "2002:a9fe::/32",
-            "2002:ac10::/28",
-            "2002:c000::/40",
-            "2002:c000:200::/40",
-            "2002:c0a8::/32",
-            "2002:c612::/31",
-            "2002:c633:6400::/40",
-            "2002:cb00:7100::/40",
-            "2002:e000::/20",
-            "2002:f000::/20",
-            "2002:ffff:ffff::/48"
-        };
-
-        String[] bogonTeredoList = {
-            "2001::/40",
-            "2001:0:a00::/40",
-            "2001:0:7f00::/40",
-            "2001:0:a9fe::/48",
-            "2001:0:ac10::/44",
-            "2001:0:c000::/56",
-            "2001:0:c000:200::/56",
-            "2001:0:c0a8::/48",
-            "2001:0:c612::/47",
-            "2001:0:c633:6400::/56",
-            "2001:0:cb00:7100::/56",
-            "2001:0:e000::/36",
-            "2001:0:f000::/36",
-            "2001:0:ffff:ffff::/64"
-        };
-
-        InetAddress address = parseAddress(ip);
-        if (address instanceof Inet4Address) {
-            for (int i = 0; i < bogonIPv4List.length; i++) {
-                IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogonIPv4List[i]);
-                if (ipAddressMatcher.matches(ip)) {
-                    return "IPv4";
-                }
-            }
-        }
-
-        for (int i = 0; i < bogonIPv6List.length; i++) {
-            IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogonIPv6List[i]);
+    static boolean isBogon(String ip)  {
+        for (int i = 0; i < IpAddressMatcherList.length; i++) {
+            IpAddressMatcher ipAddressMatcher = IpAddressMatcherList[i];
             if (ipAddressMatcher.matches(ip)) {
-                return "IPv6";
+                return true;
             }
         }
-
-        for (int i = 0; i < bogon6to4List.length; i++) {
-            IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogon6to4List[i]);
-            if (ipAddressMatcher.matches(ip)) {
-                return "6to4";
-            }
-        }
-
-        for (int i = 0; i < bogonTeredoList.length; i++) {
-            IpAddressMatcher ipAddressMatcher = new IpAddressMatcher(bogonTeredoList[i]);
-            if (ipAddressMatcher.matches(ip)) {
-                return "Teredo";
-            }
-        }
-
-        return null;
+        return false;
     }
 
     static InetAddress parseAddress(String address) {
