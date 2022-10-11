@@ -39,9 +39,15 @@ public class IPinfoTest {
                     () -> assertFalse(response.getPrivacy().getVpn()),
                     () -> assertFalse(response.getPrivacy().getTor()),
                     () -> assertFalse(response.getPrivacy().getRelay()),
-                    () -> assertFalse(response.getPrivacy().getHosting()),
+                    () -> assertTrue(response.getPrivacy().getHosting()),
                     () -> assertEquals(response.getPrivacy().getService(), ""),
                     () -> assertEquals(response.getDomains().getDomains().size(), 5)
+            );
+
+            IPResponse bogonResp = ii.lookupIP("2001:0:c000:200::0:255:1");
+            assertAll("",
+            () -> assertEquals(bogonResp.getIp(), "2001:0:c000:200::0:255:1"),
+            () -> assertTrue(bogonResp.getBogon())
             );
         } catch (RateLimitedException e) {
             fail(e);
@@ -72,6 +78,7 @@ public class IPinfoTest {
             urls.add("AS123");
             urls.add("8.8.8.8");
             urls.add("9.9.9.9/hostname");
+            urls.add("239.0.0.0");
             ConcurrentHashMap<String, Object> result = ii.getBatch(urls);
 
             assertAll("keys exist",
@@ -107,13 +114,19 @@ public class IPinfoTest {
                     () -> assertFalse(ipResp.getPrivacy().getVpn()),
                     () -> assertFalse(ipResp.getPrivacy().getTor()),
                     () -> assertFalse(ipResp.getPrivacy().getRelay()),
-                    () -> assertFalse(ipResp.getPrivacy().getHosting()),
+                    () -> assertTrue(ipResp.getPrivacy().getHosting()),
                     () -> assertEquals(ipResp.getPrivacy().getService(), ""),
                     () -> assertEquals(ipResp.getDomains().getDomains().size(), 5)
             );
 
             String hostname = (String)result.get("9.9.9.9/hostname");
             assertEquals(hostname, "dns9.quad9.net");
+
+            IPResponse bogonResp = (IPResponse)result.get("239.0.0.0");
+            assertAll("239.0.0.0",
+                    () -> assertEquals(bogonResp.getIp(), "239.0.0.0"),
+                    () -> assertTrue(bogonResp.getBogon())
+            );
         } catch (RateLimitedException e) {
             fail(e);
         }
@@ -171,7 +184,7 @@ public class IPinfoTest {
                     () -> assertFalse(res2.getPrivacy().getVpn()),
                     () -> assertFalse(res2.getPrivacy().getTor()),
                     () -> assertFalse(res2.getPrivacy().getRelay()),
-                    () -> assertFalse(res2.getPrivacy().getHosting()),
+                    () -> assertTrue(res2.getPrivacy().getHosting()),
                     () -> assertEquals(res2.getPrivacy().getService(), ""),
                     () -> assertEquals(res2.getDomains().getDomains().size(), 5)
             );

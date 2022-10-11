@@ -154,9 +154,6 @@ public class IPRequest extends BaseRequest<IPResponse> {
                 nMaskBits = -1;
             }
             requiredAddress = parseAddress(ipAddress);
-            assert  (requiredAddress.getAddress().length * 8 >= nMaskBits) :
-                    String.format("IP address %s is too short for bitmask of length %d",
-                            ipAddress, nMaskBits);
         }
 
         public boolean matches(String address) {
