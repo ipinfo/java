@@ -24,7 +24,6 @@ public class IPRequest extends BaseRequest<IPResponse> {
             try {
                 return new IPResponse(ip, true);
             } catch (Exception ex) {
-                System.out.println("inException");
                 throw new ErrorResponseException(ex);
             }
         }
