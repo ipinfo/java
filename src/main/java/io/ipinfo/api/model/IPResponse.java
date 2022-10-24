@@ -5,6 +5,7 @@ import io.ipinfo.api.context.Context;
 public class IPResponse {
     private final String ip;
     private final String hostname;
+    private final boolean bogon;
     private final boolean anycast;
     private final String city;
     private final String region;
@@ -24,6 +25,7 @@ public class IPResponse {
     public IPResponse(
             String ip,
             String hostname,
+            boolean bogon,
             boolean anycast,
             String city,
             String region,
@@ -41,6 +43,7 @@ public class IPResponse {
     ) {
         this.ip = ip;
         this.hostname = hostname;
+        this.bogon = bogon;
         this.anycast = anycast;
         this.city = city;
         this.region = region;
@@ -55,7 +58,13 @@ public class IPResponse {
         this.privacy = privacy;
         this.abuse = abuse;
         this.domains = domains;
+    }
 
+    public IPResponse(
+        String ip,
+        boolean bogon
+    ) {
+        this(ip, null, bogon, false,  null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -73,6 +82,10 @@ public class IPResponse {
 
     public String getHostname() {
         return hostname;
+    }
+
+    public boolean getBogon() {
+        return bogon;
     }
 
     public boolean getAnycast() {
@@ -157,23 +170,29 @@ public class IPResponse {
 
     @Override
     public String toString() {
-        return "IPResponse{" +
-                "ip='" + ip + '\'' +
-                ", hostname='" + hostname + '\'' +
-                ", anycast=" + anycast +
-                ", city='" + city + '\'' +
-                ", region='" + region + '\'' +
-                ", country='" + country + '\'' +
-                ", loc='" + loc + '\'' +
-                ", org='" + org + '\'' +
-                ", postal='" + postal + '\'' +
-                ", timezone='" + timezone + '\'' +
-                ", asn=" + asn +
-                ", company=" + company +
-                ", carrier=" + carrier +
-                ", privacy=" + privacy +
-                ", abuse=" + abuse +
-                ", domains=" + domains +
-                '}';
+        return (bogon ?
+                "IPResponse{" +
+                    "ip='" + ip + '\'' +
+                    ", bogon='" + bogon + '\'' +
+                "}"
+                :
+                "IPResponse{" +
+                    "ip='" + ip + '\'' +
+                    ", hostname='" + hostname + '\'' +
+                    ", anycast=" + anycast +
+                    ", city='" + city + '\'' +
+                    ", region='" + region + '\'' +
+                    ", country='" + country + '\'' +
+                    ", loc='" + loc + '\'' +
+                    ", org='" + org + '\'' +
+                    ", postal='" + postal + '\'' +
+                    ", timezone='" + timezone + '\'' +
+                    ", asn=" + asn +
+                    ", company=" + company +
+                    ", carrier=" + carrier +
+                    ", privacy=" + privacy +
+                    ", abuse=" + abuse +
+                    ", domains=" + domains +
+                '}');
     }
 }
