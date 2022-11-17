@@ -8,6 +8,9 @@ import io.ipinfo.api.cache.SimpleCache;
 import io.ipinfo.api.context.Context;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
+import io.ipinfo.api.model.Continent;
+import io.ipinfo.api.model.CountryCurrency;
+import io.ipinfo.api.model.CountryFlag;
 import io.ipinfo.api.model.IPResponse;
 import io.ipinfo.api.model.MapResponse;
 import io.ipinfo.api.request.ASNRequest;
@@ -362,6 +365,12 @@ public class IPinfo {
                 new File(this.getClass().getClassLoader().getResource("en_US.json").getFile());
         private File euCountryFile =
                 new File(this.getClass().getClassLoader().getResource("eu.json").getFile());
+        private File countryFlagFile =
+                new File(this.getClass().getClassLoader().getResource("flags.json").getFile());
+        private File countryCurrencyFile =
+                new File(this.getClass().getClassLoader().getResource("currency.json").getFile());
+        private File continentFile =
+                new File(this.getClass().getClassLoader().getResource("continent.json").getFile());
         private OkHttpClient client = new OkHttpClient.Builder().build();
         private String token = "";
         private Cache cache = new SimpleCache(Duration.ofDays(1));
@@ -386,6 +395,21 @@ public class IPinfo {
             return this;
         }
 
+        public Builder setCountryFlagFile(File file) {
+            this.countryFlagFile = file;
+            return this;
+        }
+
+        public Builder setCountryCurrencyFile(File file) {
+            this.countryCurrencyFile = file;
+            return this;
+        }
+
+        public Builder setContinentFile(File file) {
+            this.continentFile = file;
+            return this;
+        }
+
         public Builder setCache(Cache cache) {
             this.cache = cache;
             return this;
@@ -394,19 +418,31 @@ public class IPinfo {
         public IPinfo build() {
             Type type = new TypeToken<Map<String, String>>(){}.getType();
             Type euCountriesType = new TypeToken<List<String>>(){}.getType();
+            Type countriesFlagsType = new TypeToken<Map<String, CountryFlag>>(){}.getType();
+            Type countriesCurrencyType = new TypeToken<Map<String, CountryCurrency>>(){}.getType();
+            Type continentType = new TypeToken<Map<String, Continent>>(){}.getType();
             Gson gson = new Gson();
             Map<String, String> map;
+            Map<String, CountryFlag> countriesFlags;
+            Map<String, CountryCurrency> countriesCurrencies;
+            Map<String, Continent> continents;
             List<String> euList;
 
             try {
                 map = Collections.unmodifiableMap(gson.fromJson(new FileReader(countryFile), type));
+                countriesFlags = Collections.unmodifiableMap(gson.fromJson(new FileReader(countryFlagFile), countriesFlagsType));
+                countriesCurrencies = Collections.unmodifiableMap(gson.fromJson(new FileReader(countryCurrencyFile), countriesCurrencyType));
+                continents = Collections.unmodifiableMap(gson.fromJson(new FileReader(continentFile), continentType));
                 euList = Collections.unmodifiableList(gson.fromJson(new FileReader(euCountryFile), euCountriesType));
             } catch (Exception e) {
                 map = Collections.unmodifiableMap(new HashMap<>());
+                countriesFlags = Collections.unmodifiableMap(new HashMap<>());
+                countriesCurrencies = Collections.unmodifiableMap(new HashMap<>());
+                continents = Collections.unmodifiableMap(new HashMap<>());
                 euList = Collections.unmodifiableList(new ArrayList<>());
             }
 
-            return new IPinfo(client, new Context(map, euList), token, cache);
+            return new IPinfo(client, new Context(map, euList, countriesFlags, countriesCurrencies, continents), token, cache);
         }
     }
 

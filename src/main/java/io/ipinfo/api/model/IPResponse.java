@@ -112,6 +112,18 @@ public class IPResponse {
         return context.isEU(getCountryCode());
     }
 
+    public CountryFlag getCountryFlag() {
+        return context.getCountryFlag(getCountryCode());
+    }
+
+    public CountryCurrency getCountryCurrency() {
+        return context.getCountryCurrency(getCountryCode());
+    }
+
+    public Continent getContinent() {
+        return context.getContinent(getCountryCode());
+    }
+
     public String getLocation() {
         return loc;
     }
