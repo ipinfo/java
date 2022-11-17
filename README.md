@@ -207,7 +207,59 @@ public class Main {
 }
 ```
 
-This file must follow the same layout as seen [here](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json)
+#### Internationalization
+
+This library provides a system to lookup if a country is a member of the European Union (EU), emoji and unicode of country's flag, code and symbol of country's currency and continent code and name through ISO2 country codes.
+
+Following are the file that are loaded by default:
+- [eu.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) 
+- [flags.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/flags.json) 
+- [currency.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/currency.json) 
+- [continent.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/continent.json) 
+
+If you wish to provide a different file, just use the following system in the builder:
+
+```java
+import io.ipinfo.api.IPinfo;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponse;
+
+public class Main {
+    public static void main(String... args) {
+        IPinfo ipInfo = new IPinfo.Builder()
+                .setToken("YOUR TOKEN")
+                .setEUCountryFile(new File("path/to/file.json"))
+                .setCountryFlagFile(new File("path/to/file.json"))
+                .setCountryCurrencyFile(new File("path/to/file.json"))
+                .setContinentFile(new File("path/to/file.json"))
+                .build();
+
+        try {
+            IPResponse response = ipInfo.lookupIP("8.8.8.8");
+
+            // Print out whether the country is a member of the EU
+            System.out.println(response.isEU());
+
+            // CountryFlag{emoji='🇺🇸',unicode='U+1F1FA U+1F1F8'}
+            System.out.println(response.getCountryFlag());
+
+            // CountryCurrency{code='USD',symbol='$'}
+            System.out.println(response.getCountryCurrency());
+
+            // Continent{code='NA',name='North America'}
+            System.out.println(response.getContinent());
+        } catch (RateLimitedException ex) {
+            // Handle rate limits here.
+        }
+    }
+}
+```
+
+The files must follow the same layout as seen 
+- [eu.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) 
+- [flags.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/flags.json) 
+- [currency.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/currency.json) 
+- [continent.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/continent.json) 
 
 #### Location Information
 
