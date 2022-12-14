@@ -1,3 +1,9 @@
+# 2.2.0
+
+- Added `isEU`, `CountryFlag`, `CountryCurrency` and `Continent` fields.
+- Checking bogon IP locally.
+- Upgraded `okhttp` to `4.10.0`.
+
 # 2.1.0
 
 - Added `Relay` and `Service` fields to `io.ipinfo.api.model.Privacy`.
