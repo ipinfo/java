@@ -209,7 +209,7 @@ public class Main {
 
 #### Internationalization
 
-This library provides a system to lookup if a country is a member of the European Union (EU), emoji and unicode of country's flag, code and symbol of country's currency and continent code and name through ISO2 country codes.
+This library provides a system to lookup if a country is a member of the European Union (EU), emoji and unicode of country's flag, code and symbol of country's currency, public link to the country's flag image as an SVG and continent code and name through ISO2 country codes.
 
 Following are the file that are loaded by default:
 - [eu.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) 
@@ -242,6 +242,9 @@ public class Main {
 
             // CountryFlag{emoji='🇺🇸',unicode='U+1F1FA U+1F1F8'}
             System.out.println(response.getCountryFlag());
+
+            // https://cdn.ipinfo.io/static/images/countries-flags/US.svg
+            System.out.println(response.getCountryFlagURL());
 
             // CountryCurrency{code='USD',symbol='$'}
             System.out.println(response.getCountryCurrency());

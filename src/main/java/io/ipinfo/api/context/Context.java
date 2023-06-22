@@ -13,6 +13,7 @@ public class Context {
     private final Map<String, CountryCurrency> countriesCurrencies;
     private final Map<String, Continent> continents;
     private final List<String> euCountries;
+    private final static String CountryFlagURL = "https://cdn.ipinfo.io/static/images/countries-flags/";
 
     public Context(
         Map<String, String> countryMap, 
@@ -34,6 +35,10 @@ public class Context {
 
     public CountryFlag getCountryFlag(String countryCode) {
         return countriesFlags.get(countryCode);
+    }
+
+    public String getCountryFlagURL(String countryCode) {
+        return Context.CountryFlagURL + countryCode + ".svg";
     }
 
     public CountryCurrency getCountryCurrency(String countryCode) {

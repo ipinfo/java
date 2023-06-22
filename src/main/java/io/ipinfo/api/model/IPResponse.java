@@ -116,6 +116,10 @@ public class IPResponse {
         return context.getCountryFlag(getCountryCode());
     }
 
+    public String getCountryFlagURL() {
+        return context.getCountryFlagURL(getCountryCode());
+    }
+
     public CountryCurrency getCountryCurrency() {
         return context.getCountryCurrency(getCountryCode());
     }
