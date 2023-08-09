@@ -2,10 +2,10 @@
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
 
-This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
+This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to look up your own IP address, or get any of the following details for an IP:
 
- - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude and longitude)
- - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting or company)
+ - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
+ - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
  - [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
  - [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
@@ -96,12 +96,12 @@ public class Main {
   `ExecutionException` of a future. This exception signals that something went
   wrong when mapping the API response to the wrapper. You probably can't
   recover from this exception.
-- `RateLimitedException` An exception signalling that you've been rate limited.
+- `RateLimitedException` An exception signaling that you've been rate limited.
 
 #### Caching
 
 This library provides a very simple caching system accessible in `SimpleCache`.
-Simple cache is an in memory caching system that resets every time you restart
+Simple cache is an in-memory caching system that resets every time you restart
 your code.
 
 If you prefer a different caching methodology, you may use the `Cache`
@@ -209,7 +209,7 @@ public class Main {
 
 #### Internationalization
 
-This library provides a system to lookup if a country is a member of the European Union (EU), emoji and unicode of country's flag, code and symbol of country's currency, public link to the country's flag image as an SVG and continent code and name through ISO2 country codes.
+This library provides a system to lookup if a country is a member of the European Union (EU), emoji and unicode of the country's flag, code and symbol of the country's currency, and public link to the country's flag image as an SVG and continent code and name through ISO2 country codes.
 
 Following are the file that are loaded by default:
 - [eu.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) 
@@ -258,7 +258,7 @@ public class Main {
 }
 ```
 
-The files must follow the same layout as seen 
+The files must follow the same layout as seen at:
 - [eu.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) 
 - [flags.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/flags.json) 
 - [currency.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/currency.json) 
@@ -296,14 +296,14 @@ public class Main {
 
 #### Extra Information
 
-- This library is thread safe. Feel free to call the different endpoints from
+- This library is thread-safe. Feel free to call the different endpoints from
   different threads.
-- This library uses square's http client. Please refer to their documentation
+- This library uses Square's http client. Please refer to their documentation
   to get information on more functionality you can use.
 
 ### Other Libraries
 
-There are official [IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API.
+There are official [IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails, and Laravel. There are also many third-party libraries and integrations available for our API.
 
 ### About IPinfo
 
