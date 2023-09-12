@@ -32,7 +32,7 @@ Dependency:
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-api</artifactId>
-        <version>2.2</version>
+        <version>2.2.1</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
