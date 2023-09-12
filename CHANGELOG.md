@@ -1,3 +1,7 @@
+# 2.2.1
+
+- Updated vulnerable dependency; `com.google.guava`
+
 # 2.2.0
 
 - Added `isEU`, `CountryFlag`, `CountryCurrency` and `Continent` fields.
