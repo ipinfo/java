@@ -1,8 +1,5 @@
 name: Publish package to the Maven Central Repository
-on:
-  push:
-    tags:
-      - 'ipinfo-*'
+on: workflow_dispatch
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -19,5 +16,6 @@ jobs:
       - name: Publish package
         run: mvn --batch-mode clean source:jar javadoc:jar deploy
         env:
+          IPINFO_TOKEN: ${{ secrets.IPINFO_TOKEN }}
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
