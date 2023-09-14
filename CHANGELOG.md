@@ -1,3 +1,7 @@
+# 2.2.2
+
+- Updated guava to vsn 32.1.2
+
 # 2.2.1
 
 - Updated vulnerable dependency; `com.google.guava`

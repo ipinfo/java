@@ -23,7 +23,7 @@ public abstract class BaseRequest<T> {
     public Response handleRequest(Request.Builder request) throws RateLimitedException {
         request
                 .addHeader("Authorization", Credentials.basic(token, ""))
-                .addHeader("user-agent", "IPinfoClient/Java/2.2.1")
+                .addHeader("user-agent", "IPinfoClient/Java/2.2.2")
                 .addHeader("Content-Type", "application/json");
 
         Response response;
