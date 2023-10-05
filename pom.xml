@@ -103,14 +103,6 @@
         <outputDirectory>target/classes</outputDirectory>
 
         <finalName>${project.name}-${project.version}</finalName>
-        <resources>
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <includes>
-                    <include>*.json</include>
-                </includes>
-            </resource>
-        </resources>
 
         <plugins>
             <plugin>
