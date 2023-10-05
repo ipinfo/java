@@ -807,6 +807,7 @@ public class Context {
         countriesCurrencies.put("VU", new CountryCurrency("VUV", "VT"));
         countriesCurrencies.put("WF", new CountryCurrency("XPF", "₣"));
         countriesCurrencies.put("WS", new CountryCurrency("WST", "WS$"));
+        countriesCurrencies.put("XK", new CountryCurrency("EUR", "€"));
         countriesCurrencies.put("YE", new CountryCurrency("YER", "﷼"));
         countriesCurrencies.put("YT", new CountryCurrency("EUR", "€"));
         countriesCurrencies.put("ZA", new CountryCurrency("ZAR", "R"));
