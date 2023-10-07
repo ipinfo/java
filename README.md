@@ -140,10 +140,6 @@ public class Main {
 This library provides a system to lookup country names through ISO2 country
 codes.
 
-By default, this translation exists for English (United States). If you wish to
-provide a different language mapping, just use the following system in the
-builder:
-
 ```java
 import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
@@ -153,7 +149,6 @@ public class Main {
     public static void main(String... args) {
         IPinfo ipInfo = new IPinfo.Builder()
                 .setToken("YOUR TOKEN")
-                .setCountryFile(new File("path/to/file.json"))
                 .build();
 
         try {
@@ -171,17 +166,10 @@ public class Main {
 }
 ```
 
-This file must follow the same layout as seen [here](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/en_US.json)
-
-More language files can be found [here](https://country.io/data)
-
 #### EU Country Lookup
 
 This library provides a system to lookup if a country is a member of the European Union (EU) through 
 ISO2 country codes.
-
-By default, [here](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) is the file containing all the EU members. 
-If you wish to provide a different file, just use the following system in the builder:
 
 ```java
 import io.ipinfo.api.IPinfo;
@@ -192,7 +180,6 @@ public class Main {
     public static void main(String... args) {
         IPinfo ipInfo = new IPinfo.Builder()
                 .setToken("YOUR TOKEN")
-                .setEUCountryFile(new File("path/to/file.json"))
                 .build();
 
         try {
@@ -211,14 +198,6 @@ public class Main {
 
 This library provides a system to lookup if a country is a member of the European Union (EU), emoji and unicode of the country's flag, code and symbol of the country's currency, and public link to the country's flag image as an SVG and continent code and name through ISO2 country codes.
 
-Following are the file that are loaded by default:
-- [eu.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) 
-- [flags.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/flags.json) 
-- [currency.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/currency.json) 
-- [continent.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/continent.json) 
-
-If you wish to provide a different file, just use the following system in the builder:
-
 ```java
 import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
@@ -228,10 +207,6 @@ public class Main {
     public static void main(String... args) {
         IPinfo ipInfo = new IPinfo.Builder()
                 .setToken("YOUR TOKEN")
-                .setEUCountryFile(new File("path/to/file.json"))
-                .setCountryFlagFile(new File("path/to/file.json"))
-                .setCountryCurrencyFile(new File("path/to/file.json"))
-                .setContinentFile(new File("path/to/file.json"))
                 .build();
 
         try {
@@ -258,12 +233,6 @@ public class Main {
 }
 ```
 
-The files must follow the same layout as seen at:
-- [eu.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/eu.json) 
-- [flags.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/flags.json) 
-- [currency.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/currency.json) 
-- [continent.json](https://github.com/ipinfo/java-ipinfo/blob/master/src/main/resources/continent.json) 
-
 #### Location Information
 
 This library provides an easy way to get the latitude and longitude of an IP Address:
@@ -277,7 +246,6 @@ public class Main {
     public static void main(String... args) {
         IPinfo ipInfo = new IPinfo.Builder()
                 .setToken("YOUR TOKEN")
-                .setCountryFile(new File("path/to/file.json"))
                 .build();
 
         try {
