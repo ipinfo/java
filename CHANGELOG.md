@@ -1,3 +1,12 @@
+# 3.0.0
+
+- Removed loading of country/continent/currency/EU-related data via files. This
+  is done fully statically now.
+- IPinfo builder no longer supports functions `setContinentFile`,
+  `setCountryCurrencyFile`, `setCountryFlagFile`, `setEUCountryFile`,
+  `setCountryFile`.
+- IPinfo `Context` object no longer supports being initialized via input maps.
+
 # 2.2.2
 
 - Updated guava to vsn 32.1.2

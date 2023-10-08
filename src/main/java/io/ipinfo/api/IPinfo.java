@@ -249,7 +249,7 @@ public class IPinfo {
                 .url(postUrl)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Authorization", Credentials.basic(token, ""))
-                .addHeader("User-Agent", "IPinfoClient/Java/2.2.2");
+                .addHeader("User-Agent", "IPinfoClient/Java/3.0.0");
 
         for (int i = 0; i < lookupUrls.size(); i += batchSize) {
             // create chunk.
