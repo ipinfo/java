@@ -3,7 +3,10 @@ package io.ipinfo.api.request;
 import io.ipinfo.api.errors.ErrorResponseException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.MapResponse;
-import okhttp3.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import java.util.List;
 

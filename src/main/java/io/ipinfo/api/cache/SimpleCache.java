@@ -3,12 +3,12 @@ package io.ipinfo.api.cache;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoField;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SimpleCache implements Cache {
     private final Duration duration;
-    private final Map<String, Payload> cache = new HashMap<>();
+    private final Map<String, Payload> cache = new ConcurrentHashMap<>();
 
     public SimpleCache(Duration duration) {
         this.duration = duration;
