@@ -44,7 +44,7 @@ public class IPRequest extends BaseRequest<IPResponse> {
         }
     }
 
-    static IpAddressMatcher[] IpAddressMatcherList = {
+     private static final IpAddressMatcher[] IpAddressMatcherList = {
         // IPv4
         new IpAddressMatcher("0.0.0.0/8"),
         new IpAddressMatcher("10.0.0.0/8"),
@@ -106,8 +106,7 @@ public class IPRequest extends BaseRequest<IPResponse> {
     };
 
     static boolean isBogon(String ip)  {
-        for (int i = 0; i < IpAddressMatcherList.length; i++) {
-            IpAddressMatcher ipAddressMatcher = IpAddressMatcherList[i];
+        for (IpAddressMatcher ipAddressMatcher : IpAddressMatcherList) {
             if (ipAddressMatcher.matches(ip)) {
                 return true;
             }

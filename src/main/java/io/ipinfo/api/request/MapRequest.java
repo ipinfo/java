@@ -19,7 +19,7 @@ public class MapRequest extends BaseRequest<MapResponse> {
     @Override
     public MapResponse handle() throws RateLimitedException {
         String jsonIpList = gson.toJson(ips);
-        RequestBody requestBody = RequestBody.create(null, jsonIpList);
+        RequestBody requestBody = RequestBody.create(jsonIpList, JSON);
         Request.Builder request = new Request.Builder().url(URL).post(requestBody);
 
         try (Response response = handleRequest(request)) {

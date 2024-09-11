@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiConsumer;
 
 public class IPinfo {
     private static final int batchMaxSize = 1000;
@@ -35,6 +34,7 @@ public class IPinfo {
             .setTimeoutPerBatch(batchReqTimeoutDefault)
             .build();
     private final static Gson gson = new Gson();
+    private static final MediaType JSON = MediaType.parse("application/json");
 
     private final OkHttpClient client;
     private final Context context;
@@ -215,7 +215,7 @@ public class IPinfo {
         }
 
         // everything cached; exit early.
-        if (lookupUrls.size() == 0) {
+        if (lookupUrls.isEmpty()) {
             return result;
         }
 
@@ -234,7 +234,7 @@ public class IPinfo {
         }
 
         // prep URL we'll target.
-        // add `filter=1` as qparam for filtering out empty results on server.
+        // add `filter=1` as param for filtering out empty results on server.
         String postUrl;
         if (opts.filter) {
             postUrl = "https://ipinfo.io/batch?filter=1";
@@ -243,7 +243,7 @@ public class IPinfo {
         }
 
         // prepare latch & common request.
-        // each request, when complete, will countdown the latch.
+        // each request, when complete, will count down the latch.
         CountDownLatch latch = new CountDownLatch((int)Math.ceil(lookupUrls.size()/1000.0));
         Request.Builder reqCommon = new Request.Builder()
                 .url(postUrl)
@@ -261,7 +261,7 @@ public class IPinfo {
 
             // prepare & queue up request.
             String urlListJson = gson.toJson(urlsChunk);
-            RequestBody requestBody = RequestBody.create(null, urlListJson);
+            RequestBody requestBody = RequestBody.create(urlListJson, JSON);
             Request req = reqCommon.post(requestBody).build();
             OkHttpClient chunkClient = client.newBuilder()
                     .connectTimeout(timeoutPerBatch, TimeUnit.SECONDS)
@@ -284,22 +284,19 @@ public class IPinfo {
                     Type respType = new TypeToken<HashMap<String, Object>>() {}.getType();
                     HashMap<String, Object> localResult
                             = gson.fromJson(response.body().string(), respType);
-                    localResult.forEach(new BiConsumer<String, Object>() {
-                        @Override
-                        public void accept(String k, Object v) {
-                            if (k.startsWith("AS")) {
-                                String vStr = gson.toJson(v);
-                                ASNResponse vCasted = gson.fromJson(vStr, ASNResponse.class);
-                                vCasted.setContext(context);
-                                result.put(k, vCasted);
-                            } else if (InetAddresses.isInetAddress(k)) {
-                                String vStr = gson.toJson(v);
-                                IPResponse vCasted = gson.fromJson(vStr, IPResponse.class);
-                                vCasted.setContext(context);
-                                result.put(k, vCasted);
-                            } else {
-                                result.put(k, v);
-                            }
+                    localResult.forEach((key, value) -> {
+                        if (key.startsWith("AS")) {
+                            String vStr = gson.toJson(value);
+                            ASNResponse vCasted = gson.fromJson(vStr, ASNResponse.class);
+                            vCasted.setContext(context);
+                            result.put(key, vCasted);
+                        } else if (InetAddresses.isInetAddress(key)) {
+                            String vStr = gson.toJson(value);
+                            IPResponse vCasted = gson.fromJson(vStr, IPResponse.class);
+                            vCasted.setContext(context);
+                            result.put(key, vCasted);
+                        } else {
+                            result.put(key, value);
                         }
                     });
 
@@ -315,7 +312,7 @@ public class IPinfo {
             } else {
                 boolean success = latch.await(opts.timeoutTotal, TimeUnit.SECONDS);
                 if (!success) {
-                    if (result.size() == 0) {
+                    if (result.isEmpty()) {
                         return null;
                     } else {
                         return result;
@@ -323,7 +320,7 @@ public class IPinfo {
                 }
             }
         } catch (InterruptedException e) {
-            if (result.size() == 0) {
+            if (result.isEmpty()) {
                 return null;
             } else {
                 return result;
@@ -403,14 +400,14 @@ public class IPinfo {
             private boolean filter = false;
 
             /**
-             * batchSize is the internal batch size used per API request; the IPinfo
+             * <p>batchSize is the internal batch size used per API request; the IPinfo
              * API has a maximum batch size, but the batch request functions available
-             * in this library do not. Therefore the library chunks the input slices
+             * in this library do not. Therefore, the library chunks the input slices
              * internally into chunks of size `batchSize`, clipping to the maximum
-             * allowed by the IPinfo API.
+             * allowed by the IPinfo API.</p>
              *
-             * 0 means to use the default batch size which is the max allowed by the
-             * IPinfo API.
+             * <p>0 means to use the default batch size which is the max allowed by the
+             * IPinfo API.</p>
              *
              * @param batchSize see description.
              * @return the builder.
@@ -421,11 +418,11 @@ public class IPinfo {
             }
 
             /**
-             * timeoutPerBatch is the timeout in seconds that each batch of size
-             * `BatchSize` will have for its own request.
+             * <p>timeoutPerBatch is the timeout in seconds that each batch of size
+             * `BatchSize` will have for its own request.</p>
              *
-             * 0 means to use a default of 5 seconds; any negative number will turn it
-             * off; turning it off does _not_ disable the effects of `timeoutTotal`.
+             * <p>0 means to use a default of 5 seconds; any negative number will turn it
+             * off; turning it off does _not_ disable the effects of `timeoutTotal`.</p>
              *
              * @param timeoutPerBatch see description.
              * @return the builder.
@@ -436,10 +433,10 @@ public class IPinfo {
             }
 
             /**
-             * timeoutTotal is the total timeout in seconds for all batch requests in a
-             * batch request function to complete.
+             * <p>timeoutTotal is the total timeout in seconds for all batch requests in a
+             * batch request function to complete.</p>
              *
-             * 0 means no total timeout; `timeoutPerBatch` will still apply.
+             * <p>0 means no total timeout; `timeoutPerBatch` will still apply.</p>
              *
              * @param timeoutTotal see description.
              * @return the builder.
@@ -450,8 +447,8 @@ public class IPinfo {
             }
 
             /**
-             * filter, if turned on, will filter out a URL whose value was deemed empty
-             * on the server.
+             * <p>filter, if turned on, will filter out a URL whose value was deemed empty
+             * on the server.</p>
              *
              * @param filter see description.
              * @return the builder.
