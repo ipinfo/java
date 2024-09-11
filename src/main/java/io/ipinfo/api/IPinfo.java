@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import io.ipinfo.api.cache.Cache;
 import io.ipinfo.api.cache.SimpleCache;
 import io.ipinfo.api.context.Context;
+import io.ipinfo.api.errors.InvalidTokenException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
 import io.ipinfo.api.model.IPResponse;
@@ -60,7 +61,7 @@ public class IPinfo {
      * @return IPResponse response from the api.
      * @throws RateLimitedException an exception when your api key has been rate limited.
      */
-    public IPResponse lookupIP(String ip) throws RateLimitedException {
+    public IPResponse lookupIP(String ip) throws RateLimitedException, InvalidTokenException {
         IPResponse response = (IPResponse)cache.get(cacheKey(ip));
         if (response != null) {
             return response;
@@ -80,7 +81,7 @@ public class IPinfo {
      * @return ASNResponse response from the api.
      * @throws RateLimitedException an exception when your api key has been rate limited.
      */
-    public ASNResponse lookupASN(String asn) throws RateLimitedException {
+    public ASNResponse lookupASN(String asn) throws RateLimitedException, InvalidTokenException {
         ASNResponse response = (ASNResponse)cache.get(cacheKey(asn));
         if (response != null) {
             return response;
@@ -100,7 +101,7 @@ public class IPinfo {
      * @return String the URL to the map.
      * @throws RateLimitedException an exception when your API key has been rate limited.
      */
-    public String getMap(List<String> ips) throws RateLimitedException {
+    public String getMap(List<String> ips) throws RateLimitedException, InvalidTokenException {
         MapResponse response = new MapRequest(client, token, ips).handle();
         return response.getReportUrl();
     }
@@ -374,6 +375,9 @@ public class IPinfo {
         }
 
         public IPinfo build() {
+            if (token == null || token.isEmpty()) {
+                throw new IllegalArgumentException("A token must be provided.");
+            }
             return new IPinfo(client, new Context(), token, cache);
         }
     }

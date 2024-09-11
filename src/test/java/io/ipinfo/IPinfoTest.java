@@ -2,6 +2,7 @@ package io.ipinfo;
 
 import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.ErrorResponseException;
+import io.ipinfo.api.errors.InvalidTokenException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
 import io.ipinfo.api.model.IPResponse;
@@ -56,7 +57,7 @@ public class IPinfoTest {
             () -> assertEquals(bogonResp.getIp(), "2001:0:c000:200::0:255:1"),
             () -> assertTrue(bogonResp.getBogon())
             );
-        } catch (RateLimitedException e) {
+        } catch (RateLimitedException | InvalidTokenException e) {
             fail(e);
         }
     }
@@ -69,7 +70,7 @@ public class IPinfoTest {
 
         try {
             String mapUrl = ii.getMap(Arrays.asList("1.1.1.1", "2.2.2.2", "8.8.8.8"));
-        } catch (RateLimitedException e) {
+        } catch (RateLimitedException | InvalidTokenException e) {
             fail(e);
         }
     }

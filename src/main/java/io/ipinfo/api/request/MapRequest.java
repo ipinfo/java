@@ -1,6 +1,7 @@
 package io.ipinfo.api.request;
 
 import io.ipinfo.api.errors.ErrorResponseException;
+import io.ipinfo.api.errors.InvalidTokenException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.MapResponse;
 import okhttp3.*;
@@ -17,7 +18,7 @@ public class MapRequest extends BaseRequest<MapResponse> {
     }
 
     @Override
-    public MapResponse handle() throws RateLimitedException {
+    public MapResponse handle() throws RateLimitedException, InvalidTokenException {
         String jsonIpList = gson.toJson(ips);
         RequestBody requestBody = RequestBody.create(null, jsonIpList);
         Request.Builder request = new Request.Builder().url(URL).post(requestBody);
