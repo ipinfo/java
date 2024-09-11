@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import io.ipinfo.api.errors.ErrorResponseException;
 import io.ipinfo.api.errors.RateLimitedException;
 import okhttp3.Credentials;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -12,6 +13,7 @@ public abstract class BaseRequest<T> {
     protected final static Gson gson = new Gson();
     private final OkHttpClient client;
     private final String token;
+    protected static final MediaType JSON = MediaType.parse("application/json");
 
     protected BaseRequest(OkHttpClient client, String token) {
         this.client = client;
@@ -32,11 +34,6 @@ public abstract class BaseRequest<T> {
             response = client.newCall(request.build()).execute();
         } catch (Exception e) {
             throw new ErrorResponseException(e);
-        }
-
-        // Sanity check
-        if (response == null) {
-            return null;
         }
 
         if (response.code() == 429) {
