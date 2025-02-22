@@ -1,3 +1,8 @@
+# 3.0.1
+
+- `IPResponse`: reflect `anycast` response field being renamed to `is_anycast`
+- fix and improve tests
+
 # 3.0.0
 
 - Removed loading of country/continent/currency/EU-related data via files. This

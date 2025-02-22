@@ -4,10 +4,10 @@
 
 This is the official Java client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to look up your own IP address, or get any of the following details for an IP:
 
- - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
- - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
- - [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
- - [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
+- [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
+- [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
+- [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
+- [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
 Check all the data we have for your IP address [here](https://ipinfo.io/what-is-my-ip).
 
@@ -32,7 +32,7 @@ Dependency:
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-api</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
@@ -42,7 +42,7 @@ Dependency:
 
 ##### IP Information
 
-````java
+```java
 import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
@@ -63,11 +63,11 @@ public class Main {
         }
     }
 }
-````
+```
 
 ##### ASN Information
 
-````java
+```java
 import io.ipinfo.api.IPinfo;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
@@ -88,7 +88,7 @@ public class Main {
         }
     }
 }
-````
+```
 
 #### Errors
 
@@ -168,7 +168,7 @@ public class Main {
 
 #### EU Country Lookup
 
-This library provides a system to lookup if a country is a member of the European Union (EU) through 
+This library provides a system to lookup if a country is a member of the European Union (EU) through
 ISO2 country codes.
 
 ```java
