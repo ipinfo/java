@@ -163,11 +163,11 @@ public class IPinfoTest {
                     () -> assertEquals("1.1.1.1", res1.getIp(), "IP mismatch"),
                     () -> assertEquals("one.one.one.one", res1.getHostname(), "hostname mismatch"),
                     () -> assertTrue(res1.getAnycast(), "anycast mismatch"),
-                    () -> assertEquals("Los Angeles", res1.getCity(), "city mismatch"),
-                    () -> assertEquals("California", res1.getRegion(), "region mismatch"),
-                    () -> assertEquals("US", res1.getCountryCode(), "country code mismatch"),
-                    () -> assertEquals("United States", res1.getCountryName(), "country name mismatch"),
-                    () -> assertEquals("America/Los_Angeles", res1.getTimezone(), "timezone mismatch"),
+                    () -> assertEquals("Brisbane", res1.getCity(), "city mismatch"),
+                    () -> assertEquals("Queensland", res1.getRegion(), "region mismatch"),
+                    () -> assertEquals("AU", res1.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("Australia", res1.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("Australia/Brisbane", res1.getTimezone(), "timezone mismatch"),
                     () -> assertFalse(res1.getPrivacy().getProxy(), "proxy mismatch"),
                     () -> assertFalse(res1.getPrivacy().getVpn(), "VPN mismatch"),
                     () -> assertFalse(res1.getPrivacy().getTor(), "Tor mismatch"),
@@ -259,7 +259,7 @@ public class IPinfoTest {
                     () -> assertEquals("arin", res2.getRegistry(), "registry mismatch"),
                     () -> assertEquals("mail.mil", res2.getDomain(), "domain mismatch"),
                     () -> assertEquals(new Integer(66048), res2.getNumIps(), "num IPs mismatch"),
-                    () -> assertEquals("business", res2.getType(), "type mismatch")
+                    () -> assertEquals("government", res2.getType(), "type mismatch")
             );
         } catch (RateLimitedException e) {
             fail(e);
