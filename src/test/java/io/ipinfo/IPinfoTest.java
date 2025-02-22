@@ -26,35 +26,35 @@ public class IPinfoTest {
         try {
             IPResponse response = ii.lookupIP("8.8.8.8");
             assertAll("8.8.8.8",
-                    () -> assertEquals(response.getIp(), "8.8.8.8"),
-                    () -> assertEquals(response.getHostname(), "dns.google"),
-                    () -> assertTrue(response.getAnycast()),
-                    () -> assertEquals(response.getCity(), "Mountain View"),
-                    () -> assertEquals(response.getRegion(), "California"),
-                    () -> assertEquals(response.getCountryCode(), "US"),
-                    () -> assertEquals(response.getCountryName(), "United States"),
-                    () -> assertFalse(response.isEU()),
-                    () -> assertEquals(response.getCountryFlag().getEmoji(), "🇺🇸"),
-                    () -> assertEquals(response.getCountryFlag().getUnicode(), "U+1F1FA U+1F1F8"),
-                    () -> assertEquals(response.getCountryFlagURL(), "https://cdn.ipinfo.io/static/images/countries-flags/US.svg"),
-                    () -> assertEquals(response.getCountryCurrency().getCode(), "USD"),
-                    () -> assertEquals(response.getCountryCurrency().getSymbol(), "$"),
-                    () -> assertEquals(response.getContinent().getCode(), "NA"),
-                    () -> assertEquals(response.getContinent().getName(), "North America"),
-                    () -> assertEquals(response.getTimezone(), "America/Los_Angeles"),
-                    () -> assertFalse(response.getPrivacy().getProxy()),
-                    () -> assertFalse(response.getPrivacy().getVpn()),
-                    () -> assertFalse(response.getPrivacy().getTor()),
-                    () -> assertFalse(response.getPrivacy().getRelay()),
-                    () -> assertTrue(response.getPrivacy().getHosting()),
-                    () -> assertEquals(response.getPrivacy().getService(), ""),
-                    () -> assertEquals(response.getDomains().getDomains().size(), 5)
+                    () -> assertEquals("8.8.8.8", response.getIp(), "IP mismatch"),
+                    () -> assertEquals("dns.google", response.getHostname(), "hostname mismatch"),
+                    () -> assertTrue(response.getAnycast(), "anycast mismatch"),
+                    () -> assertEquals("Mountain View", response.getCity(), "city mismatch"),
+                    () -> assertEquals("California", response.getRegion(), "region mismatch"),
+                    () -> assertEquals("US", response.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", response.getCountryName(), "country name mismatch"),
+                    () -> assertFalse(response.isEU(), "isEU mismatch"),
+                    () -> assertEquals("🇺🇸", response.getCountryFlag().getEmoji(), "emoji mismatch"),
+                    () -> assertEquals("U+1F1FA U+1F1F8", response.getCountryFlag().getUnicode(), "country flag unicode mismatch"),
+                    () -> assertEquals("https://cdn.ipinfo.io/static/images/countries-flags/US.svg", response.getCountryFlagURL(), "country flag mismatch"),
+                    () -> assertEquals("USD", response.getCountryCurrency().getCode(), "country currency code mismatch"),
+                    () -> assertEquals("$", response.getCountryCurrency().getSymbol(), "country currency symbo mismatch"),
+                    () -> assertEquals("NA", response.getContinent().getCode(), "continent code mismatch"),
+                    () -> assertEquals("North America", response.getContinent().getName(), "continent name mismatch"),
+                    () -> assertEquals("America/Los_Angeles", response.getTimezone(), "timezone mismatch"),
+                    () -> assertFalse(response.getPrivacy().getProxy(), "proxy mismatch"),
+                    () -> assertFalse(response.getPrivacy().getVpn(), "VPN mismatch"),
+                    () -> assertFalse(response.getPrivacy().getTor(), "Tor mismatch"),
+                    () -> assertFalse(response.getPrivacy().getRelay(), "relay mismatch"),
+                    () -> assertTrue(response.getPrivacy().getHosting(), "hosting mismatch"),
+                    () -> assertEquals("", response.getPrivacy().getService(), "service mismatch"),
+                    () -> assertEquals(5, response.getDomains().getDomains().size(), "domains size mismatch")
             );
 
             IPResponse bogonResp = ii.lookupIP("2001:0:c000:200::0:255:1");
-            assertAll("",
-            () -> assertEquals(bogonResp.getIp(), "2001:0:c000:200::0:255:1"),
-            () -> assertTrue(bogonResp.getBogon())
+            assertAll("bogon response",
+            () -> assertEquals("2001:0:c000:200::0:255:1", bogonResp.getIp(), "IP mismatch"),
+            () -> assertTrue(bogonResp.getBogon(), "bogon mismatch")
             );
         } catch (RateLimitedException e) {
             fail(e);
@@ -89,50 +89,50 @@ public class IPinfoTest {
             ConcurrentHashMap<String, Object> result = ii.getBatch(urls);
 
             assertAll("keys exist",
-                    () -> assertTrue(result.containsKey("AS123")),
-                    () -> assertTrue(result.containsKey("8.8.8.8")),
-                    () -> assertTrue(result.containsKey("9.9.9.9/hostname"))
+                    () -> assertTrue(result.containsKey("AS123"), "does not contain AS123"),
+                    () -> assertTrue(result.containsKey("8.8.8.8"), "does not contain 8.8.8.8"),
+                    () -> assertTrue(result.containsKey("9.9.9.9/hostname"), "does not contain 9.9.9.9/hostname")
             );
 
             ASNResponse asnResp = (ASNResponse)result.get("AS123");
             assertAll("AS123",
-                    () -> assertEquals(asnResp.getAsn(), "AS123"),
-                    () -> assertEquals(asnResp.getName(), "Air Force Systems Networking"),
-                    () -> assertEquals(asnResp.getCountryCode(), "US"),
-                    () -> assertEquals(asnResp.getCountryName(), "United States"),
-                    () -> assertEquals(asnResp.getAllocated(), "1987-08-24"),
-                    () -> assertEquals(asnResp.getRegistry(), "arin"),
-                    () -> assertEquals(asnResp.getDomain(), "af.mil"),
-                    () -> assertEquals(asnResp.getNumIps(), new Integer(0)),
-                    () -> assertEquals(asnResp.getType(), "inactive")
+                    () -> assertEquals("AS123", asnResp.getAsn(), "ASN mismatch"),
+                    () -> assertEquals("Air Force Systems Networking", asnResp.getName(), "name mismatch"),
+                    () -> assertEquals("US", asnResp.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", asnResp.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("1987-08-24", asnResp.getAllocated(), "allocated mismatch"),
+                    () -> assertEquals("arin", asnResp.getRegistry(), "registry mismatch"),
+                    () -> assertEquals("af.mil", asnResp.getDomain(), "domain mismatch"),
+                    () -> assertEquals(new Integer(0), asnResp.getNumIps(), "num IPs mismatch"),
+                    () -> assertEquals("inactive", asnResp.getType(), "type mismatch")
             );
 
             IPResponse ipResp = (IPResponse)result.get("8.8.8.8");
             assertAll("8.8.8.8",
-                    () -> assertEquals(ipResp.getIp(), "8.8.8.8"),
-                    () -> assertEquals(ipResp.getHostname(), "dns.google"),
-                    () -> assertTrue(ipResp.getAnycast()),
-                    () -> assertEquals(ipResp.getCity(), "Mountain View"),
-                    () -> assertEquals(ipResp.getRegion(), "California"),
-                    () -> assertEquals(ipResp.getCountryCode(), "US"),
-                    () -> assertEquals(ipResp.getCountryName(), "United States"),
-                    () -> assertEquals(ipResp.getTimezone(), "America/Los_Angeles"),
-                    () -> assertFalse(ipResp.getPrivacy().getProxy()),
-                    () -> assertFalse(ipResp.getPrivacy().getVpn()),
-                    () -> assertFalse(ipResp.getPrivacy().getTor()),
-                    () -> assertFalse(ipResp.getPrivacy().getRelay()),
-                    () -> assertTrue(ipResp.getPrivacy().getHosting()),
-                    () -> assertEquals(ipResp.getPrivacy().getService(), ""),
-                    () -> assertEquals(ipResp.getDomains().getDomains().size(), 5)
+                    () -> assertEquals("8.8.8.8", ipResp.getIp(), "IP mismatch"),
+                    () -> assertEquals("dns.google", ipResp.getHostname(), "hostname mismatch"),
+                    () -> assertTrue(ipResp.getAnycast(), "anycast mismatch"),
+                    () -> assertEquals("Mountain View", ipResp.getCity(), "city mismatch"),
+                    () -> assertEquals("California", ipResp.getRegion(), "region mismatch"),
+                    () -> assertEquals("US", ipResp.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", ipResp.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("America/Los_Angeles", ipResp.getTimezone(), "timezone mismatch"),
+                    () -> assertFalse(ipResp.getPrivacy().getProxy(), "proxy mismatch"),
+                    () -> assertFalse(ipResp.getPrivacy().getVpn(), "VPN mismatch"),
+                    () -> assertFalse(ipResp.getPrivacy().getTor(), "Tor mismatch"),
+                    () -> assertFalse(ipResp.getPrivacy().getRelay(), "relay mismatch"),
+                    () -> assertTrue(ipResp.getPrivacy().getHosting(), "hosting mismatch"),
+                    () -> assertEquals("", ipResp.getPrivacy().getService(), "service mismatch"),
+                    () -> assertEquals(5, ipResp.getDomains().getDomains().size(), "domains size mismatch")
             );
 
             String hostname = (String)result.get("9.9.9.9/hostname");
-            assertEquals(hostname, "dns9.quad9.net");
+            assertEquals("dns9.quad9.net", hostname, "hostname mismatch");
 
             IPResponse bogonResp = (IPResponse)result.get("239.0.0.0");
             assertAll("239.0.0.0",
-                    () -> assertEquals(bogonResp.getIp(), "239.0.0.0"),
-                    () -> assertTrue(bogonResp.getBogon())
+                    () -> assertEquals("239.0.0.0", bogonResp.getIp(), "IP mismatch"),
+                    () -> assertTrue(bogonResp.getBogon(), "bogon mismatch")
             );
         } catch (RateLimitedException e) {
             fail(e);
@@ -153,66 +153,66 @@ public class IPinfoTest {
             ConcurrentHashMap<String, IPResponse> result = ii.getBatchIps(ips);
 
             assertAll("keys exist",
-                    () -> assertTrue(result.containsKey("1.1.1.1")),
-                    () -> assertTrue(result.containsKey("8.8.8.8")),
-                    () -> assertTrue(result.containsKey("9.9.9.9"))
+                    () -> assertTrue(result.containsKey("1.1.1.1"), "does not contain 1.1.1.1"),
+                    () -> assertTrue(result.containsKey("8.8.8.8"), "does not contain 8.8.8.8"),
+                    () -> assertTrue(result.containsKey("9.9.9.9"), "does not contain 9.9.9.9")
             );
 
             IPResponse res1 = result.get("1.1.1.1");
             assertAll("1.1.1.1",
-                    () -> assertEquals(res1.getIp(), "1.1.1.1"),
-                    () -> assertEquals(res1.getHostname(), "one.one.one.one"),
-                    () -> assertTrue(res1.getAnycast()),
-                    () -> assertEquals(res1.getCity(), "Los Angeles"),
-                    () -> assertEquals(res1.getRegion(), "California"),
-                    () -> assertEquals(res1.getCountryCode(), "US"),
-                    () -> assertEquals(res1.getCountryName(), "United States"),
-                    () -> assertEquals(res1.getTimezone(), "America/Los_Angeles"),
-                    () -> assertFalse(res1.getPrivacy().getProxy()),
-                    () -> assertFalse(res1.getPrivacy().getVpn()),
-                    () -> assertFalse(res1.getPrivacy().getTor()),
-                    () -> assertFalse(res1.getPrivacy().getRelay()),
-                    () -> assertTrue(res1.getPrivacy().getHosting()),
-                    () -> assertEquals(res1.getPrivacy().getService(), ""),
-                    () -> assertEquals(res1.getDomains().getDomains().size(), 5)
+                    () -> assertEquals("1.1.1.1", res1.getIp(), "IP mismatch"),
+                    () -> assertEquals("one.one.one.one", res1.getHostname(), "hostname mismatch"),
+                    () -> assertTrue(res1.getAnycast(), "anycast mismatch"),
+                    () -> assertEquals("Los Angeles", res1.getCity(), "city mismatch"),
+                    () -> assertEquals("California", res1.getRegion(), "region mismatch"),
+                    () -> assertEquals("US", res1.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", res1.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("America/Los_Angeles", res1.getTimezone(), "timezone mismatch"),
+                    () -> assertFalse(res1.getPrivacy().getProxy(), "proxy mismatch"),
+                    () -> assertFalse(res1.getPrivacy().getVpn(), "VPN mismatch"),
+                    () -> assertFalse(res1.getPrivacy().getTor(), "Tor mismatch"),
+                    () -> assertFalse(res1.getPrivacy().getRelay(), "relay mismatch"),
+                    () -> assertTrue(res1.getPrivacy().getHosting(), "hosting mismatch"),
+                    () -> assertEquals("", res1.getPrivacy().getService(), "service mismatch"),
+                    () -> assertEquals(5, res1.getDomains().getDomains().size(), "domains size mismatch")
             );
 
             IPResponse res2 = result.get("8.8.8.8");
             assertAll("8.8.8.8",
-                    () -> assertEquals(res2.getIp(), "8.8.8.8"),
-                    () -> assertEquals(res2.getHostname(), "dns.google"),
-                    () -> assertTrue(res2.getAnycast()),
-                    () -> assertEquals(res2.getCity(), "Mountain View"),
-                    () -> assertEquals(res2.getRegion(), "California"),
-                    () -> assertEquals(res2.getCountryCode(), "US"),
-                    () -> assertEquals(res2.getCountryName(), "United States"),
-                    () -> assertEquals(res2.getTimezone(), "America/Los_Angeles"),
-                    () -> assertFalse(res2.getPrivacy().getProxy()),
-                    () -> assertFalse(res2.getPrivacy().getVpn()),
-                    () -> assertFalse(res2.getPrivacy().getTor()),
-                    () -> assertFalse(res2.getPrivacy().getRelay()),
-                    () -> assertTrue(res2.getPrivacy().getHosting()),
-                    () -> assertEquals(res2.getPrivacy().getService(), ""),
-                    () -> assertEquals(res2.getDomains().getDomains().size(), 5)
+                    () -> assertEquals("8.8.8.8", res2.getIp(), "IP mismatch"),
+                    () -> assertEquals("dns.google", res2.getHostname(), "hostname mismatch"),
+                    () -> assertTrue(res2.getAnycast(), "anycast mismatch"),
+                    () -> assertEquals("Mountain View", res2.getCity(), "city mismatch"),
+                    () -> assertEquals("California", res2.getRegion(), "region mismatch"),
+                    () -> assertEquals("US", res2.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", res2.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("America/Los_Angeles", res2.getTimezone(), "timezone mismatch"),
+                    () -> assertFalse(res2.getPrivacy().getProxy(), "proxy mismatch"),
+                    () -> assertFalse(res2.getPrivacy().getVpn(), "VPN mismatch"),
+                    () -> assertFalse(res2.getPrivacy().getTor(), "Tor mismatch"),
+                    () -> assertFalse(res2.getPrivacy().getRelay(), "relay mismatch"),
+                    () -> assertTrue(res2.getPrivacy().getHosting(), "hosting mismatch"),
+                    () -> assertEquals("", res2.getPrivacy().getService(), "service mismatch"),
+                    () -> assertEquals(5, res2.getDomains().getDomains().size(), "domains size mismatch")
             );
 
             IPResponse res3 = result.get("9.9.9.9");
             assertAll("9.9.9.9",
-                    () -> assertEquals(res3.getIp(), "9.9.9.9"),
-                    () -> assertEquals(res3.getHostname(), "dns9.quad9.net"),
-                    () -> assertTrue(res3.getAnycast()),
-                    () -> assertEquals(res3.getCity(), "Zürich"),
-                    () -> assertEquals(res3.getRegion(), "Zurich"),
-                    () -> assertEquals(res3.getCountryCode(), "CH"),
-                    () -> assertEquals(res3.getCountryName(), "Switzerland"),
-                    () -> assertEquals(res3.getTimezone(), "Europe/Zurich"),
-                    () -> assertFalse(res3.getPrivacy().getProxy()),
-                    () -> assertFalse(res3.getPrivacy().getVpn()),
-                    () -> assertFalse(res3.getPrivacy().getTor()),
-                    () -> assertFalse(res3.getPrivacy().getRelay()),
-                    () -> assertFalse(res3.getPrivacy().getHosting()),
-                    () -> assertEquals(res3.getPrivacy().getService(), ""),
-                    () -> assertEquals(res3.getDomains().getDomains().size(), 5)
+                    () -> assertEquals("9.9.9.9", res3.getIp(), "IP mismatch"),
+                    () -> assertEquals("dns9.quad9.net", res3.getHostname(), "hostname mismatch"),
+                    () -> assertTrue(res3.getAnycast(), "anycast mismatch"),
+                    () -> assertEquals("Zürich", res3.getCity(), "city mismatch"),
+                    () -> assertEquals("Zurich", res3.getRegion(), "region mismatch"),
+                    () -> assertEquals("CH", res3.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("Switzerland", res3.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("Europe/Zurich", res3.getTimezone(), "timezone mismatch"),
+                    () -> assertFalse(res3.getPrivacy().getProxy(), "proxy mismatch"),
+                    () -> assertFalse(res3.getPrivacy().getVpn(), "VPN mismatch"),
+                    () -> assertFalse(res3.getPrivacy().getTor(), "Tor mismatch"),
+                    () -> assertFalse(res3.getPrivacy().getRelay(), "relay mismatch"),
+                    () -> assertFalse(res3.getPrivacy().getHosting(), "hosting mismatch"),
+                    () -> assertEquals("", res3.getPrivacy().getService(), "service mismatch"),
+                    () -> assertEquals(5, res3.getDomains().getDomains().size(), "domains size mismatch")
             );
         } catch (RateLimitedException e) {
             fail(e);
@@ -232,34 +232,34 @@ public class IPinfoTest {
             ConcurrentHashMap<String, ASNResponse> result = ii.getBatchAsns(asns);
 
             assertAll("keys exist",
-                    () -> assertTrue(result.containsKey("AS123")),
-                    () -> assertTrue(result.containsKey("AS321"))
+                    () -> assertTrue(result.containsKey("AS123"), "does not contain AS123"),
+                    () -> assertTrue(result.containsKey("AS321"), "does not contain AS321")
             );
 
             ASNResponse res1 = result.get("AS123");
             assertAll("AS123",
-                    () -> assertEquals(res1.getAsn(), "AS123"),
-                    () -> assertEquals(res1.getName(), "Air Force Systems Networking"),
-                    () -> assertEquals(res1.getCountryCode(), "US"),
-                    () -> assertEquals(res1.getCountryName(), "United States"),
-                    () -> assertEquals(res1.getAllocated(), "1987-08-24"),
-                    () -> assertEquals(res1.getRegistry(), "arin"),
-                    () -> assertEquals(res1.getDomain(), "af.mil"),
-                    () -> assertEquals(res1.getNumIps(), new Integer(0)),
-                    () -> assertEquals(res1.getType(), "inactive")
+                    () -> assertEquals("AS123", res1.getAsn(), "ASN mismatch"),
+                    () -> assertEquals("Air Force Systems Networking", res1.getName(), "name mismatch"),
+                    () -> assertEquals("US", res1.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", res1.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("1987-08-24", res1.getAllocated(), "allocated mismatch"),
+                    () -> assertEquals("arin", res1.getRegistry(), "registry mismatch"),
+                    () -> assertEquals("af.mil", res1.getDomain(), "domain mismatch"),
+                    () -> assertEquals(new Integer(0), res1.getNumIps(), "num IPs mismatch"),
+                    () -> assertEquals("inactive", res1.getType(), "type mismatch")
             );
 
             ASNResponse res2 = result.get("AS321");
             assertAll("AS321",
-                    () -> assertEquals(res2.getAsn(), "AS321"),
-                    () -> assertEquals(res2.getName(), "DoD Network Information Center"),
-                    () -> assertEquals(res2.getCountryCode(), "US"),
-                    () -> assertEquals(res2.getCountryName(), "United States"),
-                    () -> assertEquals(res2.getAllocated(), "1989-06-30"),
-                    () -> assertEquals(res2.getRegistry(), "arin"),
-                    () -> assertEquals(res2.getDomain(), "mail.mil"),
-                    () -> assertEquals(res2.getNumIps(), new Integer(66048)),
-                    () -> assertEquals(res2.getType(), "business")
+                    () -> assertEquals("AS321", res2.getAsn(), "ASN mismatch"),
+                    () -> assertEquals("DoD Network Information Center", res2.getName(), "name mismatch"),
+                    () -> assertEquals("US", res2.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", res2.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("1989-06-30", res2.getAllocated(), "allocated mismatch"),
+                    () -> assertEquals("arin", res2.getRegistry(), "registry mismatch"),
+                    () -> assertEquals("mail.mil", res2.getDomain(), "domain mismatch"),
+                    () -> assertEquals(new Integer(66048), res2.getNumIps(), "num IPs mismatch"),
+                    () -> assertEquals("business", res2.getType(), "type mismatch")
             );
         } catch (RateLimitedException e) {
             fail(e);
