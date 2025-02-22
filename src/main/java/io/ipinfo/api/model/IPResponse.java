@@ -6,7 +6,7 @@ public class IPResponse {
     private final String ip;
     private final String hostname;
     private final boolean bogon;
-    private final boolean anycast;
+    private final boolean is_anycast;
     private final String city;
     private final String region;
     private final String country;
@@ -26,7 +26,7 @@ public class IPResponse {
             String ip,
             String hostname,
             boolean bogon,
-            boolean anycast,
+            boolean is_anycast,
             String city,
             String region,
             String country,
@@ -44,7 +44,7 @@ public class IPResponse {
         this.ip = ip;
         this.hostname = hostname;
         this.bogon = bogon;
-        this.anycast = anycast;
+        this.is_anycast = is_anycast;
         this.city = city;
         this.region = region;
         this.country = country;
@@ -89,7 +89,7 @@ public class IPResponse {
     }
 
     public boolean getAnycast() {
-        return anycast;
+        return is_anycast;
     }
 
     public String getCity() {
@@ -195,7 +195,7 @@ public class IPResponse {
                 "IPResponse{" +
                     "ip='" + ip + '\'' +
                     ", hostname='" + hostname + '\'' +
-                    ", anycast=" + anycast +
+                    ", is_anycast=" + is_anycast +
                     ", city='" + city + '\'' +
                     ", region='" + region + '\'' +
                     ", country='" + country + '\'' +
