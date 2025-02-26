@@ -6,7 +6,12 @@ public class IPResponse {
     private final String ip;
     private final String hostname;
     private final boolean bogon;
+
+    // IPinfo's IP response indicates whether an IP is anycast, using either
+    // `anycast` or `is_anycast` fields, depending on the token's capabilities.
+    private final boolean anycast;
     private final boolean is_anycast;
+
     private final String city;
     private final String region;
     private final String country;
@@ -26,6 +31,7 @@ public class IPResponse {
             String ip,
             String hostname,
             boolean bogon,
+            boolean anycast,
             boolean is_anycast,
             String city,
             String region,
@@ -44,6 +50,7 @@ public class IPResponse {
         this.ip = ip;
         this.hostname = hostname;
         this.bogon = bogon;
+        this.anycast = anycast;
         this.is_anycast = is_anycast;
         this.city = city;
         this.region = region;
@@ -64,7 +71,7 @@ public class IPResponse {
         String ip,
         boolean bogon
     ) {
-        this(ip, null, bogon, false,  null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this(ip, null, bogon, false, false, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -89,7 +96,7 @@ public class IPResponse {
     }
 
     public boolean getAnycast() {
-        return is_anycast;
+        return anycast || is_anycast;
     }
 
     public String getCity() {
@@ -195,6 +202,7 @@ public class IPResponse {
                 "IPResponse{" +
                     "ip='" + ip + '\'' +
                     ", hostname='" + hostname + '\'' +
+                    ", anycast=" + anycast +
                     ", is_anycast=" + is_anycast +
                     ", city='" + city + '\'' +
                     ", region='" + region + '\'' +
