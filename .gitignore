@@ -4,3 +4,4 @@ target/
 out/
 
 *.gpg
+settings.xml
