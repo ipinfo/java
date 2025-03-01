@@ -1,6 +1,7 @@
 package io.ipinfo.api.request;
 
 import io.ipinfo.api.errors.ErrorResponseException;
+import io.ipinfo.api.errors.InvalidTokenException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.IPResponse;
 import okhttp3.OkHttpClient;
@@ -19,7 +20,7 @@ public class IPRequest extends BaseRequest<IPResponse> {
     }
 
     @Override
-    public IPResponse handle() throws RateLimitedException {
+    public IPResponse handle() throws RateLimitedException, InvalidTokenException {
         if (isBogon(ip)) {
             try {
                 return new IPResponse(ip, true);
