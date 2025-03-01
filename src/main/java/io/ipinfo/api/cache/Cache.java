@@ -1,8 +1,5 @@
 package io.ipinfo.api.cache;
 
-import io.ipinfo.api.model.ASNResponse;
-import io.ipinfo.api.model.IPResponse;
-
 public interface Cache {
     /**
      * Gets an arbitrary object stored in cache.
