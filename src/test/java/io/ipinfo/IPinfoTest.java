@@ -1,14 +1,11 @@
 package io.ipinfo;
 
 import io.ipinfo.api.IPinfo;
-import io.ipinfo.api.errors.ErrorResponseException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
 import io.ipinfo.api.model.IPResponse;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
