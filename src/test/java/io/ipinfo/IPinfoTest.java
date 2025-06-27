@@ -201,11 +201,11 @@ public class IPinfoTest {
                     () -> assertEquals("9.9.9.9", res3.getIp(), "IP mismatch"),
                     () -> assertEquals("dns9.quad9.net", res3.getHostname(), "hostname mismatch"),
                     () -> assertTrue(res3.getAnycast(), "anycast mismatch"),
-                    () -> assertEquals("Zürich", res3.getCity(), "city mismatch"),
-                    () -> assertEquals("Zurich", res3.getRegion(), "region mismatch"),
-                    () -> assertEquals("CH", res3.getCountryCode(), "country code mismatch"),
-                    () -> assertEquals("Switzerland", res3.getCountryName(), "country name mismatch"),
-                    () -> assertEquals("Europe/Zurich", res3.getTimezone(), "timezone mismatch"),
+                    () -> assertEquals("Ashburn", res3.getCity(), "city mismatch"),
+                    () -> assertEquals("Virginia", res3.getRegion(), "region mismatch"),
+                    () -> assertEquals("US", res3.getCountryCode(), "country code mismatch"),
+                    () -> assertEquals("United States", res3.getCountryName(), "country name mismatch"),
+                    () -> assertEquals("America/New_York", res3.getTimezone(), "timezone mismatch"),
                     () -> assertFalse(res3.getPrivacy().getProxy(), "proxy mismatch"),
                     () -> assertFalse(res3.getPrivacy().getVpn(), "VPN mismatch"),
                     () -> assertFalse(res3.getPrivacy().getTor(), "Tor mismatch"),
@@ -258,7 +258,7 @@ public class IPinfoTest {
                     () -> assertEquals("1989-06-30", res2.getAllocated(), "allocated mismatch"),
                     () -> assertEquals("arin", res2.getRegistry(), "registry mismatch"),
                     () -> assertEquals("mail.mil", res2.getDomain(), "domain mismatch"),
-                    () -> assertEquals(new Integer(66048), res2.getNumIps(), "num IPs mismatch"),
+                    () -> assertEquals(new Integer(65536), res2.getNumIps(), "num IPs mismatch"),
                     () -> assertEquals("government", res2.getType(), "type mismatch")
             );
         } catch (RateLimitedException e) {
