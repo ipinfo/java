@@ -19,7 +19,7 @@ The free plan is limited to 50,000 requests per month, and doesn't include some 
 
 [Click here to view the Java SDK's API documentation](https://ipinfo.github.io/java/).
 
-⚠️ Note: This library does not currently support our newest free API https://ipinfo.io/lite. If you’d like to use IPinfo Lite, you can call the [endpoint directly](https://ipinfo.io/developers/lite-api) using your preferred HTTP client. Developers are also welcome to contribute support for Lite by submitting a pull request.
+The library also supports the Lite API, see the [Lite API section](#lite-api) for more info.
 
 #### Installation
 
@@ -99,6 +99,41 @@ public class Main {
   wrong when mapping the API response to the wrapper. You probably can't
   recover from this exception.
 - `RateLimitedException` An exception signaling that you've been rate limited.
+
+##### Lite API
+
+The library gives the possibility to use the [Lite API](https://ipinfo.io/developers/lite-api) too, authentication with your token is still required.
+
+The returned details are slightly different from the Core API.
+
+```java
+import io.ipinfo.api.IPinfoLite;
+import io.ipinfo.api.errors.RateLimitedException;
+import io.ipinfo.api.model.IPResponseLite;
+
+public class Main {
+    public static void main(String... args) {
+        IPinfoLite ipInfoLite = new IPinfoLite.Builder()
+                .setToken("YOUR TOKEN")
+                .build();
+
+        try {
+            IPResponseLite response = ipInfoLite.lookupIP("8.8.8.8");
+
+            // Print out the ASN
+            System.out.println(response.getAsn()); // AS15169
+
+            // Print out the country code
+            System.out.println(response.getCountryCode()); // US
+
+            // Print out the country name
+            System.out.println(response.getCountry()); // United States
+        } catch (RateLimitedException ex) {
+            // Handle rate limits here.
+        }
+    }
+}
+```
 
 #### Caching
 
