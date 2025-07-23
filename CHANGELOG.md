@@ -1,3 +1,7 @@
+# 3.1.0
+
+- Add support for IPinfo Lite API
+
 # 3.0.2
 
 - `IPResponse`: `GetAnycast` returns whether an IP is anycast, independent of underlying response field (`anycast` or `is_anycast`)
