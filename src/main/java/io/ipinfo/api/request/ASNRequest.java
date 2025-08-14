@@ -1,6 +1,7 @@
 package io.ipinfo.api.request;
 
 import io.ipinfo.api.errors.ErrorResponseException;
+import io.ipinfo.api.errors.InvalidTokenException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
 import okhttp3.OkHttpClient;
@@ -18,7 +19,7 @@ public class ASNRequest extends BaseRequest<ASNResponse> {
     }
 
     @Override
-    public ASNResponse handle() throws RateLimitedException {
+    public ASNResponse handle() throws RateLimitedException, InvalidTokenException {
         String url = String.format(URL_FORMAT, asn);
         Request.Builder request = new Request.Builder().url(url).get();
 
