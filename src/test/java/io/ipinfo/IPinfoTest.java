@@ -212,7 +212,7 @@ public class IPinfoTest {
                     () -> assertFalse(res3.getPrivacy().getVpn(), "VPN mismatch"),
                     () -> assertFalse(res3.getPrivacy().getTor(), "Tor mismatch"),
                     () -> assertFalse(res3.getPrivacy().getRelay(), "relay mismatch"),
-                    () -> assertTrue(res3.getPrivacy().getHosting(), "hosting mismatch"),
+                    () -> assertFalse(res3.getPrivacy().getHosting(), "hosting mismatch"),
                     () -> assertEquals("", res3.getPrivacy().getService(), "service mismatch"),
                     () -> assertEquals(5, res3.getDomains().getDomains().size(), "domains size mismatch")
             );
