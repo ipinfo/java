@@ -173,11 +173,11 @@ public class IPinfoTest {
                     () -> assertNotNull(res1.getCountryName(), "country name should be set"),
                     () -> assertNotNull(res1.getTimezone(), "timezone should be set"),
                     () -> assertFalse(res1.getPrivacy().getProxy(), "proxy mismatch"),
-                    () -> assertFalse(res1.getPrivacy().getVpn(), "VPN mismatch"),
+                    () -> assertTrue(res1.getPrivacy().getVpn(), "VPN mismatch"),
                     () -> assertFalse(res1.getPrivacy().getTor(), "Tor mismatch"),
                     () -> assertFalse(res1.getPrivacy().getRelay(), "relay mismatch"),
                     () -> assertTrue(res1.getPrivacy().getHosting(), "hosting mismatch"),
-                    () -> assertEquals("", res1.getPrivacy().getService(), "service mismatch"),
+                    () -> assertEquals("AngelVPN", res1.getPrivacy().getService(), "service mismatch"),
                     () -> assertEquals(5, res1.getDomains().getDomains().size(), "domains size mismatch")
             );
 

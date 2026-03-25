@@ -566,7 +566,7 @@ public class Context {
         tempCountriesCurrencies.put("BD", new CountryCurrency("BDT", "৳"));
         tempCountriesCurrencies.put("BE", new CountryCurrency("EUR", "€"));
         tempCountriesCurrencies.put("BF", new CountryCurrency("XOF", "CFA"));
-        tempCountriesCurrencies.put("BG", new CountryCurrency("BGN", "лв"));
+        tempCountriesCurrencies.put("BG", new CountryCurrency("EUR", "€"));
         tempCountriesCurrencies.put("BH", new CountryCurrency("BHD", ".د.ب"));
         tempCountriesCurrencies.put("BI", new CountryCurrency("BIF", "FBu"));
         tempCountriesCurrencies.put("BJ", new CountryCurrency("XOF", "CFA"));
