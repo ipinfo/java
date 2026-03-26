@@ -9,7 +9,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public abstract class BaseRequest<T> {
-    protected final static Gson gson = new Gson();
+
+    protected static final Gson gson = new Gson();
     private final OkHttpClient client;
     private final String token;
 
@@ -20,11 +21,12 @@ public abstract class BaseRequest<T> {
 
     public abstract T handle() throws RateLimitedException;
 
-    public Response handleRequest(Request.Builder request) throws RateLimitedException {
+    public Response handleRequest(Request.Builder request)
+        throws RateLimitedException {
         request
-                .addHeader("Authorization", Credentials.basic(token, ""))
-                .addHeader("user-agent", "IPinfoClient/Java/3.3.0")
-                .addHeader("Content-Type", "application/json");
+            .addHeader("Authorization", Credentials.basic(token, ""))
+            .addHeader("user-agent", "IPinfoClient/Java/3.3.0")
+            .addHeader("Content-Type", "application/json");
 
         Response response;
 
@@ -43,7 +45,16 @@ public abstract class BaseRequest<T> {
             throw new RateLimitedException();
         }
 
+        if (!response.isSuccessful()) {
+            String body = "";
+            try {
+                if (response.body() != null) {
+                    body = response.body().string();
+                }
+            } catch (Exception ignored) {}
+            throw new ErrorResponseException(response.code(), body);
+        }
+
         return response;
     }
 }
-

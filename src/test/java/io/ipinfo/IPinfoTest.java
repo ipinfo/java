@@ -1,6 +1,7 @@
 package io.ipinfo;
 
 import io.ipinfo.api.IPinfo;
+import io.ipinfo.api.errors.ErrorResponseException;
 import io.ipinfo.api.errors.RateLimitedException;
 import io.ipinfo.api.model.ASNResponse;
 import io.ipinfo.api.model.IPResponse;
@@ -384,6 +385,49 @@ public class IPinfoTest {
             );
         } catch (RateLimitedException e) {
             fail(e);
+        } finally {
+            server.shutdown();
+        }
+    }
+
+    @Test
+    public void testServerErrorThrowsErrorResponseException() throws IOException {
+        MockWebServer server = new MockWebServer();
+        server.enqueue(new MockResponse()
+            .setResponseCode(503)
+            .setBody("Service Temporarily Unavailable")
+            .addHeader("Content-Type", "text/plain"));
+        server.start();
+
+        OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(chain -> {
+                okhttp3.Request originalRequest = chain.request();
+                okhttp3.HttpUrl newUrl = originalRequest.url().newBuilder()
+                    .scheme("http")
+                    .host(server.getHostName())
+                    .port(server.getPort())
+                    .build();
+                okhttp3.Request newRequest = originalRequest.newBuilder()
+                    .url(newUrl)
+                    .build();
+                return chain.proceed(newRequest);
+            })
+            .build();
+
+        IPinfo ii = new IPinfo.Builder()
+            .setToken("test_token")
+            .setClient(client)
+            .build();
+
+        try {
+            ErrorResponseException ex = assertThrows(
+                ErrorResponseException.class,
+                () -> ii.lookupIP("8.8.8.8")
+            );
+            assertEquals(503, ex.getStatusCode());
+            assertTrue(ex.getMessage().contains("503"), "message should contain status code");
+            assertTrue(ex.getMessage().contains("Service Temporarily Unavailable"),
+                "message should contain response body");
         } finally {
             server.shutdown();
         }
