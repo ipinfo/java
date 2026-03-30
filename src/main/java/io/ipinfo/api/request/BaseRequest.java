@@ -25,7 +25,7 @@ public abstract class BaseRequest<T> {
         throws RateLimitedException {
         request
             .addHeader("Authorization", Credentials.basic(token, ""))
-            .addHeader("user-agent", "IPinfoClient/Java/3.3.0")
+            .addHeader("user-agent", "IPinfoClient/Java/3.4.0")
             .addHeader("Content-Type", "application/json");
 
         Response response;

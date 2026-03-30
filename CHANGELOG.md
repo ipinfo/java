@@ -1,3 +1,8 @@
+# 3.4.0
+
+- Update Bulgaria currency from BGN to EUR
+- Improve error messages when requests fail
+
 # 3.3.0
 
 - Add support for Residential Proxy Detection API
