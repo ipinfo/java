@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import javax.annotation.ParametersAreNonnullByDefault;
 import okhttp3.*;
@@ -277,6 +278,8 @@ public class IPinfo {
         CountDownLatch latch = new CountDownLatch(
             (int) Math.ceil(lookupUrls.size() / 1000.0)
         );
+        // set if any request is rate limited; checked once all are done.
+        AtomicBoolean rateLimited = new AtomicBoolean(false);
         Request.Builder reqCommon = new Request.Builder()
             .url(postUrl)
             .addHeader("Content-Type", "application/json")
@@ -300,24 +303,26 @@ public class IPinfo {
                 .connectTimeout(timeoutPerBatch, TimeUnit.SECONDS)
                 .readTimeout(timeoutPerBatch, TimeUnit.SECONDS)
                 .build();
-            chunkClient
-                .newCall(req)
-                .enqueue(
-                    new Callback() {
-                        @Override
-                        @ParametersAreNonnullByDefault
-                        public void onFailure(Call call, IOException e) {
-                            latch.countDown();
-                        }
+            chunkClient.newCall(req).enqueue(
+                new Callback() {
+                    @Override
+                    @ParametersAreNonnullByDefault
+                    public void onFailure(Call call, IOException e) {
+                        latch.countDown();
+                    }
 
-                        @Override
-                        @ParametersAreNonnullByDefault
-                        public void onResponse(Call call, Response response)
-                            throws IOException {
-                            if (
-                                response.body() == null ||
-                                response.code() == 429
-                            ) {
+                    @Override
+                    @ParametersAreNonnullByDefault
+                    public void onResponse(Call call, Response response)
+                        throws IOException {
+                        // the body is closed before the latch counts down,
+                        // whichever way we leave.
+                        try (ResponseBody body = response.body()) {
+                            if (response.code() == 429) {
+                                rateLimited.set(true);
+                                return;
+                            }
+                            if (body == null) {
                                 return;
                             }
 
@@ -325,7 +330,7 @@ public class IPinfo {
                                 HashMap<String, Object>
                             >() {}.getType();
                             HashMap<String, Object> localResult = gson.fromJson(
-                                response.body().string(),
+                                body.string(),
                                 respType
                             );
                             localResult.forEach(
@@ -356,11 +361,12 @@ public class IPinfo {
                                     }
                                 }
                             );
-
+                        } finally {
                             latch.countDown();
                         }
                     }
-                );
+                }
+            );
         }
 
         // wait for all requests to finish.
@@ -386,6 +392,10 @@ public class IPinfo {
             } else {
                 return result;
             }
+        }
+
+        if (rateLimited.get()) {
+            throw new RateLimitedException();
         }
 
         // insert any new lookups into the cache:
