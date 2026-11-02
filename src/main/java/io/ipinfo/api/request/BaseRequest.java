@@ -42,6 +42,7 @@ public abstract class BaseRequest<T> {
         }
 
         if (response.code() == 429) {
+            response.close();
             throw new RateLimitedException();
         }
 
