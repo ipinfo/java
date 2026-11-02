@@ -1,3 +1,9 @@
+# 3.4.1
+
+- Fix connection leak when the API returns 429
+- Batch lookups now throw `RateLimitedException` on 429 instead of hanging
+- Update Guava to 33.7.1-jre, which no longer brings in jsr305
+
 # 3.4.0
 
 - Update Bulgaria currency from BGN to EUR

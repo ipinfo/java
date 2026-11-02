@@ -34,7 +34,7 @@ Dependency:
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-api</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.1</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
