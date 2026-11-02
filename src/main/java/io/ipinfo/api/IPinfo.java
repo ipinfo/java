@@ -26,7 +26,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
-import javax.annotation.ParametersAreNonnullByDefault;
 import okhttp3.*;
 
 public class IPinfo {
@@ -306,13 +305,11 @@ public class IPinfo {
             chunkClient.newCall(req).enqueue(
                 new Callback() {
                     @Override
-                    @ParametersAreNonnullByDefault
                     public void onFailure(Call call, IOException e) {
                         latch.countDown();
                     }
 
                     @Override
-                    @ParametersAreNonnullByDefault
                     public void onResponse(Call call, Response response)
                         throws IOException {
                         // the body is closed before the latch counts down,
